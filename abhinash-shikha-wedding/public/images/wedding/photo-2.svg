@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 750" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFF9F0" />
+      <stop offset="100%" stop-color="#F5EBDD" />
+    </linearGradient>
+  </defs>
+  <rect width="600" height="750" fill="url(#bgGrad)" />
+  <rect x="20" y="20" width="560" height="710" fill="none" stroke="#C9A45C" stroke-width="2" rx="12" />
+  <rect x="30" y="30" width="540" height="690" fill="none" stroke="#ECC875" stroke-width="1" stroke-dasharray="4,4" rx="8" />
+  <circle cx="300" cy="320" r="50" fill="#7A1F2B" fill-opacity="0.08" stroke="#C9A45C" stroke-width="1.5" />
+  <text x="300" y="328" text-anchor="middle" font-family="'Cinzel', serif" font-size="28" fill="#7A1F2B">W2</text>
+  <text x="300" y="410" text-anchor="middle" font-family="'Cinzel', serif" font-size="18" font-weight="bold" fill="#7A1F2B" letter-spacing="3">WEDDING MOMENT 2</text>
+  <text x="300" y="440" text-anchor="middle" font-family="'Playfair Display', serif" font-size="14" font-style="italic" fill="#C9A45C">ABINASH &amp; Shikha</text>
+  <text x="300" y="480" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-size="12" fill="#6B5B57">Replace with your real photograph: wedding-2.jpg</text>
+</svg>

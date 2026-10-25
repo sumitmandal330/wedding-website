@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 450" width="100%" height="100%">
+  <defs>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ECC875" />
+      <stop offset="50%" stop-color="#C9A45C" />
+      <stop offset="100%" stop-color="#9E7933" />
+    </linearGradient>
+    <linearGradient id="maroonGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7A1F2B" />
+      <stop offset="100%" stop-color="#4F131B" />
+    </linearGradient>
+    <radialGradient id="haloGrad" cx="50%" cy="40%" r="50%">
+      <stop offset="0%" stop-color="#ECC875" stop-opacity="0.4" />
+      <stop offset="60%" stop-color="#C9A45C" stop-opacity="0.15" />
+      <stop offset="100%" stop-color="#C9A45C" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+
+  <!-- Divine Halo Aura -->
+  <circle cx="200" cy="180" r="160" fill="url(#haloGrad)" />
+  <circle cx="200" cy="180" r="130" fill="none" stroke="url(#goldGrad)" stroke-width="1.5" stroke-dasharray="4,4" opacity="0.6" />
+
+  <!-- Crown (Mukut) -->
+  <path d="M165 95 L200 40 L235 95 L220 115 L180 115 Z" fill="url(#goldGrad)" stroke="#7A1F2B" stroke-width="2" />
+  <circle cx="200" cy="40" r="6" fill="#7A1F2B" stroke="url(#goldGrad)" stroke-width="1.5" />
+  <path d="M185 80 Q200 65 215 80" fill="none" stroke="#7A1F2B" stroke-width="2" />
+  <circle cx="200" cy="90" r="4" fill="#7A1F2B" />
+
+  <!-- Ears (Karna) -->
+  <path d="M140 140 C90 120 70 180 110 220 C135 230 150 210 150 190" fill="none" stroke="url(#goldGrad)" stroke-width="5" stroke-linecap="round" />
+  <path d="M260 140 C310 120 330 180 290 220 C265 230 250 210 250 190" fill="none" stroke="url(#goldGrad)" stroke-width="5" stroke-linecap="round" />
+
+  <!-- Head & Mastak -->
+  <path d="M150 140 Q200 115 250 140" fill="none" stroke="url(#goldGrad)" stroke-width="5" stroke-linecap="round" />
+
+  <!-- Tilak (Trishul style sacred tilak) -->
+  <path d="M193 115 L193 155 Q200 162 207 155 L207 115 Z" fill="#7A1F2B" stroke="url(#goldGrad)" stroke-width="1" />
+  <circle cx="200" cy="145" r="3.5" fill="url(#goldGrad)" />
+  <path d="M183 130 Q200 138 217 130" fill="none" stroke="#ECC875" stroke-width="2.5" />
+
+  <!-- Small Eyes -->
+  <ellipse cx="170" cy="165" rx="5" ry="3" fill="#7A1F2B" transform="rotate(-10 170 165)" />
+  <ellipse cx="230" cy="165" rx="5" ry="3" fill="#7A1F2B" transform="rotate(10 230 165)" />
+
+  <!-- Trunk (Sond) curving gracefully to the left -->
+  <path d="M185 185 C185 240 140 270 140 300 C140 325 170 335 185 315 C195 300 190 280 190 260 C215 235 215 185 215 185" fill="none" stroke="url(#goldGrad)" stroke-width="6" stroke-linecap="round" />
+  <!-- Modak on Trunk -->
+  <circle cx="160" cy="315" r="7" fill="url(#goldGrad)" stroke="#7A1F2B" stroke-width="1.5" />
+
+  <!-- One Tusk (Ekadanta) -->
+  <path d="M175 198 L160 210" stroke="url(#goldGrad)" stroke-width="4.5" stroke-linecap="round" />
+
+  <!-- Stole / Body Curve (Angavastra) -->
+  <path d="M125 250 Q110 320 160 365 Q200 380 240 365 Q290 320 275 250" fill="none" stroke="url(#maroonGrad)" stroke-width="4" stroke-linecap="round" opacity="0.85" />
+
+  <!-- Sacred Lotus Base / Charan Paduka (Feet Area) -->
+  <!-- Left Foot / Charan -->
+  <g id="charan-feet" opacity="0.95">
+    <!-- Left Lotus Petals -->
+    <path d="M150 375 Q175 365 190 385 Q165 395 150 375 Z" fill="url(#goldGrad)" stroke="#7A1F2B" stroke-width="1.5" />
+    <circle cx="180" cy="380" r="3" fill="#7A1F2B" />
+    <!-- Right Lotus Petals -->
+    <path d="M250 375 Q225 365 210 385 Q235 395 250 375 Z" fill="url(#goldGrad)" stroke="#7A1F2B" stroke-width="1.5" />
+    <circle cx="220" cy="380" r="3" fill="#7A1F2B" />
+    <!-- Sacred Lotus Center -->
+    <ellipse cx="200" cy="390" rx="45" ry="12" fill="url(#goldGrad)" opacity="0.3" stroke="url(#goldGrad)" stroke-width="1.5" />
+    <circle cx="200" cy="390" r="4" fill="#7A1F2B" />
+  </g>
+
+  <!-- Auspicious Inscription Base -->
+  <text x="200" y="425" text-anchor="middle" font-family="'Cinzel', serif" font-size="14" font-weight="bold" fill="#7A1F2B" letter-spacing="3">
+    ॥ ॐ गं गणपतये नमः ॥
+  </text>
+</svg>
