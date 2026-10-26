@@ -402,6 +402,8 @@ export const WelcomeScreen = ({ onEnter }) => {
               alt="Lord Ganesha - Welcome to Our Wedding Invitation"
               className="w-full h-auto block select-none pointer-events-none object-contain max-h-[70vh] sm:max-h-[72vh] md:max-h-[74vh] mx-auto filter drop-shadow-sm"
               loading="eager"
+              decoding="async"
+              fetchPriority="high"
             />
 
             {/* Accessible Interactive Hotspot over Lord Ganesha's Sacred Feet */}

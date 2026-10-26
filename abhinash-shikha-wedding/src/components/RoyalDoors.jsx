@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Sparkles, Heart } from 'lucide-react';
+import { Sparkles, Heart, ArrowLeft } from 'lucide-react';
 import { weddingData } from '../data/wedding';
 
-export const RoyalDoors = ({ onSelectChoice, autoOpen = false }) => {
+export const RoyalDoors = ({ onSelectChoice, onBack, autoOpen = false }) => {
   const [isOpening, setIsOpening] = useState(false);
 
   useEffect(() => {
@@ -25,6 +25,15 @@ export const RoyalDoors = ({ onSelectChoice, autoOpen = false }) => {
 
   return (
     <div className="min-h-screen w-full flex flex-col items-center justify-center p-4 sm:p-8 bg-gradient-to-b from-[#300B11] via-[#4F131B] to-[#20060B] text-[#FFF9F0] relative overflow-hidden select-none">
+      <button
+        type="button"
+        onClick={onBack}
+        className="absolute left-4 top-4 z-30 flex h-9 w-9 items-center justify-center rounded-full text-[#ECC875] transition hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ECC875] sm:left-6 sm:top-6"
+        aria-label="Go back to the previous invitation screen"
+      >
+        <ArrowLeft className="h-3.5 w-3.5 text-[#ECC875]" />
+      </button>
+
       {/* Decorative Palace Arch Silhouette */}
       <div className="absolute inset-0 pointer-events-none flex items-center justify-center opacity-15">
         <div className="w-[90vw] max-w-[850px] h-[95vh] border-4 border-[#ECC875] rounded-t-full" />
@@ -59,7 +68,7 @@ export const RoyalDoors = ({ onSelectChoice, autoOpen = false }) => {
           transition={{ delay: 0.62, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           className="font-serif text-xs sm:text-sm text-[#F5EBDD]/85 italic mt-1"
         >
-          Together with their families, they invite you to celebrate their wedding.
+          Together with our families, we invite you to celebrate our wedding.
         </motion.p>
       </motion.div>
 

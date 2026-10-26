@@ -10,6 +10,7 @@ import {
   Share2,
   Camera,
   CheckCircle2,
+  Heart,
 } from 'lucide-react';
 import { weddingData } from '../data/wedding';
 
@@ -210,7 +211,7 @@ export const EngagementExperience = ({ onBackToWedding }) => {
                         style={{ aspectRatio: photoAspectRatio }}
                         className="group relative rounded-2xl overflow-hidden border border-[#C9A45C]/50 hover:border-[#C9A45C] bg-[#30080E] shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer"
                       >
-                        <img src={photo.src} alt={photo.alt} className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.02]" loading="lazy" />
+                        <img src={photo.src} alt={photo.alt} className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.02]" loading="lazy" decoding="async" />
                       </motion.div>
                       );
                     })}
@@ -280,6 +281,54 @@ export const EngagementExperience = ({ onBackToWedding }) => {
           </p>
 
         </motion.div>
+
+        {/* Personal wedding invitation from the couple */}
+        <motion.section
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: prefersReducedMotion ? 0.01 : 0.7 }}
+          aria-labelledby="engagement-wedding-invitation-title"
+          className="relative mx-auto mb-10 grid w-full max-w-4xl grid-cols-1 items-center gap-4 overflow-hidden rounded-3xl border-2 border-[#C9A45C] bg-gradient-to-br from-[#30080E] via-[#54111B] to-[#25050A] p-3 shadow-2xl sm:mb-12 sm:gap-5 sm:p-5 md:grid-cols-[0.85fr_1.15fr] lg:p-6"
+        >
+          <CornerFiligree position="top-left" />
+          <CornerFiligree position="top-right" />
+          <CornerFiligree position="bottom-left" />
+          <CornerFiligree position="bottom-right" />
+
+          <div className="relative mx-auto w-full max-w-[210px] rounded-[1.4rem] border border-[#ECC875] bg-[#ECC875] p-1.5 shadow-xl sm:max-w-[250px] lg:max-w-[310px]">
+            <img
+              src="/images/engagement/wedding-invitation-couple.jpeg"
+              alt="Abinash and Shikha, warmly inviting you to celebrate their wedding"
+              className="block aspect-[5/8] w-full rounded-[1.1rem] object-cover object-center"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+
+          <div className="relative z-10 px-2 py-2 text-center sm:px-4 sm:py-5">
+            <p className="mb-3 font-display text-[10px] font-semibold uppercase tracking-[0.28em] text-[#ECC875] sm:text-xs">
+              A heartfelt invitation
+            </p>
+            <h2 id="engagement-wedding-invitation-title" className="font-heading text-2xl font-medium text-[#FFF2D2] sm:text-3xl">
+              Aapka intezaar rahega
+            </h2>
+            <div className="mx-auto my-3 flex max-w-[220px] items-center justify-center gap-3 text-[#ECC875]" aria-hidden="true">
+              <span className="h-px flex-1 bg-[#ECC875]/50" />
+              <Heart className="h-4 w-4 fill-current" />
+              <span className="h-px flex-1 bg-[#ECC875]/50" />
+            </div>
+            <blockquote className="font-serif text-base italic leading-relaxed text-[#FFF9F0] sm:text-lg lg:text-xl">
+              “Khushiyon ke is naye safar mein, aapka saath zaroor ho;
+              <br className="hidden sm:block" />
+              hamari shaadi mein zaroor aaiyega— aapke aashirwad se har pal khaas hoga.”
+            </blockquote>
+            <p className="mx-auto mt-3 max-w-xl font-serif text-sm leading-relaxed text-[#F5EBDD]/85 sm:text-base">
+              Hum dono ko aapki maujoodgi aur aashirwad ka besabri se intezaar rahega.
+            </p>
+            <p className="mt-3 font-heading text-base text-[#ECC875] sm:text-lg">— Abinash &amp; Shikha</p>
+          </div>
+        </motion.section>
 
         {/* BOTTOM NAVIGATION CTA */}
         <div className="text-center pt-6 border-t border-[#C9A45C]/30 flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -370,6 +419,8 @@ export const EngagementExperience = ({ onBackToWedding }) => {
                   src={photos[activePhotoIndex].src}
                   alt={photos[activePhotoIndex].alt}
                   className="max-h-[65vh] sm:max-h-[72vh] w-auto max-w-full object-contain"
+                  loading="lazy"
+                  decoding="async"
                 />
               </motion.div>
             </div>
@@ -402,6 +453,8 @@ export const EngagementExperience = ({ onBackToWedding }) => {
                       src={p.src}
                       alt={p.title}
                       className="w-full h-full object-cover"
+                      loading="lazy"
+                      decoding="async"
                     />
                   </button>
                 ))}

@@ -33,7 +33,7 @@ export const InvitationCover = ({ onOpen }) => {
           transition={{ duration: prefersReducedMotion ? 0.01 : 1.65, delay: prefersReducedMotion ? 0 : 0.95, ease: [0.22, 0.68, 0.24, 1] }}
           aria-hidden="true"
         >
-          <img src="/images/ganesha/auspicious-wedding-blessing.png" alt="" draggable="false" />
+          <img src="/images/ganesha/auspicious-wedding-blessing.png" alt="" draggable="false" loading="lazy" decoding="async" />
         </motion.div>
 
         <motion.button

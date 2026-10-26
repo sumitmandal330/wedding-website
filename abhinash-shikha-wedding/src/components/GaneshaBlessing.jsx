@@ -53,6 +53,8 @@ export const GaneshaBlessing = ({ onContinue }) => {
           alt="Abinash and Shikha, the couple celebrating their wedding"
           className="couple-portrait"
           draggable="false"
+          loading="lazy"
+          decoding="async"
         />
         <span className="couple-portrait-caption">Abinash <i>&amp;</i> Shikha</span>
       </motion.figure>

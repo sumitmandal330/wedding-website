@@ -440,6 +440,7 @@ export const WeddingExperience = ({ onBackToDoors, onOpenEngagement }) => {
                             alt={`${ceremony.name} celebration`}
                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                             loading="lazy"
+                            decoding="async"
                           />
 
                           {/* Shimmer Light Sweeper on hover */}
@@ -512,6 +513,54 @@ export const WeddingExperience = ({ onBackToDoors, onOpenEngagement }) => {
           </div>
         </div>
 
+        {/* A personal wedding invitation from the couple */}
+        <motion.section
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: prefersReducedMotion ? 0.01 : 0.7 }}
+          aria-labelledby="personal-wedding-invitation-title"
+          className="relative mx-auto grid w-full max-w-4xl grid-cols-1 md:grid-cols-[0.85fr_1.15fr] items-center gap-4 sm:gap-6 rounded-3xl border-2 border-[#C9A45C] bg-gradient-to-br from-[#30080E] via-[#54111B] to-[#25050A] p-3 sm:p-5 lg:p-6 mb-12 overflow-hidden shadow-2xl"
+        >
+          <CornerFiligree position="top-left" />
+          <CornerFiligree position="top-right" />
+          <CornerFiligree position="bottom-left" />
+          <CornerFiligree position="bottom-right" />
+
+          <div className="relative mx-auto w-full max-w-[210px] sm:max-w-[250px] lg:max-w-[310px] rounded-[1.4rem] border border-[#ECC875] bg-[#ECC875] p-1.5 shadow-xl">
+            <img
+              src="/images/engagement/wedding-invitation-couple.jpeg"
+              alt="Abinash and Shikha, warmly inviting you to celebrate their wedding"
+              className="block aspect-[5/8] w-full rounded-[1.1rem] object-cover object-center"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+
+          <div className="relative z-10 px-2 py-2 sm:px-4 sm:py-5 text-center">
+            <p className="font-display text-[10px] sm:text-xs uppercase tracking-[0.28em] text-[#ECC875] font-semibold mb-3">
+              A heartfelt invitation
+            </p>
+            <h2 id="personal-wedding-invitation-title" className="font-heading text-2xl sm:text-3xl text-[#FFF2D2] font-medium">
+              Aapka intezaar rahega
+            </h2>
+            <div className="mx-auto my-3 flex max-w-[220px] items-center justify-center gap-3 text-[#ECC875]" aria-hidden="true">
+              <span className="h-px flex-1 bg-[#ECC875]/50" />
+              <Heart className="h-4 w-4 fill-current" />
+              <span className="h-px flex-1 bg-[#ECC875]/50" />
+            </div>
+            <blockquote className="font-serif text-base sm:text-lg lg:text-xl leading-relaxed text-[#FFF9F0] italic">
+              “Khushiyon ke is naye safar mein, aapka saath zaroor ho;
+              <br className="hidden sm:block" />
+              hamari shaadi mein zaroor aaiyega— aapke aashirwad se har pal khaas hoga.”
+            </blockquote>
+            <p className="mx-auto mt-3 max-w-xl font-serif text-sm sm:text-base leading-relaxed text-[#F5EBDD]/85">
+              Hum dono ko aapki maujoodgi aur aashirwad ka besabri se intezaar rahega.
+            </p>
+            <p className="mt-3 font-heading text-base sm:text-lg text-[#ECC875]">— Abinash &amp; Shikha</p>
+          </div>
+        </motion.section>
+
         <div className="relative bg-gradient-to-b from-[#FFFDF9] to-[#F5EBDD] border-2 border-[#C9A45C]/60 rounded-3xl p-6 sm:p-9 shadow-xl mb-12 text-center">
           <CornerFiligree position="top-left" />
           <CornerFiligree position="top-right" />
@@ -579,9 +628,6 @@ export const WeddingExperience = ({ onBackToDoors, onOpenEngagement }) => {
             <p className="font-serif text-lg sm:text-xl text-[#4D3932] leading-relaxed">
               A beautiful beginning, a promise of forever, and moments we will cherish for a lifetime.
             </p>
-            <p className="font-serif text-base sm:text-lg text-[#6B5B57] leading-relaxed mt-3">
-              Join us in reliving the joy, laughter, and love from our engagement ceremony through these precious memories.
-            </p>
           </div>
 
           <motion.div
@@ -599,6 +645,7 @@ export const WeddingExperience = ({ onBackToDoors, onOpenEngagement }) => {
                     alt={photo.alt}
                     className="h-full w-full object-cover object-center transition-transform duration-700 hover:scale-[1.035]"
                     loading="lazy"
+                    decoding="async"
                   />
                 </div>
                 <span className="engagement-photo-caption">
@@ -680,6 +727,8 @@ export const WeddingExperience = ({ onBackToDoors, onOpenEngagement }) => {
                 src={wedding.photos[activePhotoIndex].src}
                 alt={wedding.photos[activePhotoIndex].alt}
                 className="max-h-[70vh] w-auto rounded-2xl border-2 border-[#ECC875]/60 object-contain shadow-2xl"
+                loading="lazy"
+                decoding="async"
               />
               <p className="font-heading text-lg text-[#ECC875] mt-3">
                 {wedding.photos[activePhotoIndex].title}

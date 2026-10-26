@@ -29,10 +29,12 @@ export const App = () => {
   });
   const musicTrigger = true;
   const [doorsAutoOpen, setDoorsAutoOpen] = useState(false);
+  const [doorsReturnScene, setDoorsReturnScene] = useState('cover');
 
   // Transitions
   const handleEnterFromWelcome = () => {
     setDoorsAutoOpen(false);
+    setDoorsReturnScene('welcome');
     setCurrentScene('doors');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -44,6 +46,7 @@ export const App = () => {
 
   const handleContinueFromGanesha = () => {
     setDoorsAutoOpen(true);
+    setDoorsReturnScene('ganesha');
     setCurrentScene('doors');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -60,6 +63,12 @@ export const App = () => {
   const handleBackToDoors = () => {
     setDoorsAutoOpen(false);
     setCurrentScene('doors');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleBackFromDoors = () => {
+    setDoorsAutoOpen(false);
+    setCurrentScene(doorsReturnScene);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -93,7 +102,7 @@ export const App = () => {
         )}
 
         {currentScene === 'doors' && (
-          <RoyalDoors key="doors" onSelectChoice={handleSelectDoor} autoOpen={doorsAutoOpen} />
+          <RoyalDoors key="doors" onSelectChoice={handleSelectDoor} onBack={handleBackFromDoors} autoOpen={doorsAutoOpen} />
         )}
 
         {currentScene === 'engagement' && (
