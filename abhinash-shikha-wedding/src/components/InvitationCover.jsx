@@ -11,7 +11,7 @@ export const InvitationCover = ({ onOpen }) => {
   const handleOpen = () => {
     if (isOpening) return;
     setIsOpening(true);
-    timerRef.current = setTimeout(onOpen, prefersReducedMotion ? 2200 : 4650);
+    timerRef.current = setTimeout(onOpen, prefersReducedMotion ? 2200 : 3000);
   };
 
   return (
@@ -52,6 +52,7 @@ export const InvitationCover = ({ onOpen }) => {
             : { duration: prefersReducedMotion ? 0.01 : 0.85, delay: 0.12, ease: [0.2, 0.8, 0.2, 1] }}
           style={{ transformOrigin: 'left center', transformStyle: 'preserve-3d' }}
         >
+          <span className="invitation-cover-prompt" aria-hidden="true">Tap here to open</span>
           <span className="sr-only">INVITATION</span>
           <span className="invitation-card-sheen" aria-hidden="true" />
         </motion.button>

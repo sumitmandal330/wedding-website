@@ -1,10 +1,17 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Sparkles, Heart } from 'lucide-react';
 import { weddingData } from '../data/wedding';
 
-export const RoyalDoors = ({ onSelectChoice }) => {
+export const RoyalDoors = ({ onSelectChoice, autoOpen = false }) => {
   const [isOpening, setIsOpening] = useState(false);
+
+  useEffect(() => {
+    if (!autoOpen) return undefined;
+    setIsOpening(true);
+    const timer = window.setTimeout(() => onSelectChoice('wedding'), 3000);
+    return () => window.clearTimeout(timer);
+  }, [autoOpen, onSelectChoice]);
 
   const handleDoorClick = () => {
     if (isOpening) return;

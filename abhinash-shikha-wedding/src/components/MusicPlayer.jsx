@@ -104,15 +104,24 @@ export const MusicPlayer = ({ autoPlayTrigger }) => {
         audioRef.current
           .play()
           .then(() => setIsPlaying(true))
-          .catch(() => startSynth());
-      } else {
-        startSynth();
+          .catch(() => {
+            // Browsers may block sound on page load. Retry on the visitor's first
+            // gesture so the supplied wedding track starts as soon as permitted.
+            const retryAfterInteraction = (event) => {
+              window.removeEventListener('pointerdown', retryAfterInteraction, true);
+              window.removeEventListener('keydown', retryAfterInteraction, true);
+              if (event.target.closest?.('[data-music-control]')) return;
+              audioRef.current?.play().then(() => setIsPlaying(true)).catch(() => {});
+            };
+            window.addEventListener('pointerdown', retryAfterInteraction, true);
+            window.addEventListener('keydown', retryAfterInteraction, true);
+          });
       }
     }
-  }, [autoPlayTrigger, startSynth]);
+  }, [autoPlayTrigger]);
 
   return (
-    <div className="fixed bottom-5 right-5 z-40 flex items-center gap-2">
+    <div className="fixed bottom-5 right-5 z-[60] flex items-center gap-2">
       <audio
         ref={audioRef}
         src={weddingData.music.audioSrc}
@@ -123,6 +132,7 @@ export const MusicPlayer = ({ autoPlayTrigger }) => {
 
       <div className="flex items-center bg-[#7A1F2B]/95 backdrop-blur-md text-[#FFF9F0] border border-[#ECC875] rounded-full px-4 py-2 shadow-2xl">
         <button
+          data-music-control="true"
           onClick={togglePlayback}
           aria-label={isPlaying ? 'Pause music' : 'Play traditional music'}
           className="flex items-center gap-2 text-xs font-display uppercase tracking-wider font-semibold focus:outline-none cursor-pointer"
@@ -140,7 +150,7 @@ export const MusicPlayer = ({ autoPlayTrigger }) => {
           ) : (
             <>
               <Music className="w-3.5 h-3.5 text-[#ECC875] animate-bounce" />
-              <span className="text-[#F5EBDD] text-[10px] sm:text-xs">Shehnai Music</span>
+              <span className="text-[#F5EBDD] text-[10px] sm:text-xs">{weddingData.music.title}</span>
               <Play className="w-3.5 h-3.5 text-[#ECC875]" />
             </>
           )}
@@ -149,6 +159,7 @@ export const MusicPlayer = ({ autoPlayTrigger }) => {
         <span className="h-3 w-[1px] bg-[#ECC875]/40 mx-2" />
 
         <button
+          data-music-control="true"
           onClick={togglePlayback}
           aria-label={isPlaying ? 'Mute audio' : 'Unmute audio'}
           className="p-0.5 text-[#ECC875] hover:text-white transition-colors cursor-pointer"

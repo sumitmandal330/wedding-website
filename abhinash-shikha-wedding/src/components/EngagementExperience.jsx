@@ -1,21 +1,16 @@
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import {
   ArrowLeft,
   Calendar,
-  MapPin,
   Clock,
   X,
   ChevronLeft,
   ChevronRight,
   Share2,
-  Heart,
-  Maximize2,
   Camera,
   CheckCircle2,
-  Navigation,
 } from 'lucide-react';
-import confetti from 'canvas-confetti';
 import { weddingData } from '../data/wedding';
 
 // Ornate Indian Corner Filigree for Royal Photo Frames
@@ -42,13 +37,12 @@ const CornerFiligree = ({ position = 'top-left' }) => {
 };
 
 export const EngagementExperience = ({ onBackToWedding }) => {
-  const { engagement, couple, wedding } = weddingData;
-  const photos = engagement.photos || [];
+  const prefersReducedMotion = useReducedMotion();
+  const { engagement, couple } = weddingData;
+  const photos = (engagement.photos || []).filter((photo) => ![6, 7].includes(photo.id));
 
   // Active states
   const [activePhotoIndex, setActivePhotoIndex] = useState(null);
-  const [likes, setLikes] = useState({ 1: 52, 2: 68, 3: 84, 4: 76, 5: 63, 6: 45, 7: 59 });
-  const [likedMap, setLikedMap] = useState({});
 
   // Keyboard navigation for Lightbox
   useEffect(() => {
@@ -67,48 +61,13 @@ export const EngagementExperience = ({ onBackToWedding }) => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [activePhotoIndex, photos.length]);
 
-  // Confetti / Rose Petal Shower celebration
-  const triggerCelebration = (e) => {
-    if (e) e.stopPropagation();
-    try {
-      confetti({
-        particleCount: 55,
-        spread: 85,
-        origin: { y: 0.6 },
-        colors: ['#ECC875', '#C9A45C', '#E57373', '#7A1F2B', '#FFE082', '#FFFFFF'],
-      });
-    } catch {
-      // ignore
-    }
-  };
-
-  // Heart like interaction with celebratory floaters
-  const handleLike = (e, photoId) => {
-    e.stopPropagation();
-    const isLiked = likedMap[photoId];
-
-    setLikes((prev) => ({
-      ...prev,
-      [photoId]: (prev[photoId] || 0) + (isLiked ? -1 : 1),
-    }));
-
-    setLikedMap((prev) => ({
-      ...prev,
-      [photoId]: !isLiked,
-    }));
-
-    if (!isLiked) {
-      triggerCelebration();
-    }
-  };
-
   const handleShare = () => {
     const text = `🌸 Cherished memories from the Engagement & Ashirwadi Celebration of ${couple.groom} & ${couple.bride} (Celebrated on ${engagement.date})! View album:`;
     if (navigator.share) {
-      navigator.share({ title: 'Engagement & Ashirwadi Album', text, url: window.location.href }).catch(() => {});
+      navigator.share({ title: 'Engagement & Ashirwadi Album', text, url: 'https://wedding-website-nu-two-23.vercel.app/' }).catch(() => {});
     } else {
       window.open(
-        `https://api.whatsapp.com/send?text=${encodeURIComponent(text + ' ' + window.location.href)}`,
+        `https://api.whatsapp.com/send?text=${encodeURIComponent(text + ' https://wedding-website-nu-two-23.vercel.app/')}`,
         '_blank'
       );
     }
@@ -116,11 +75,12 @@ export const EngagementExperience = ({ onBackToWedding }) => {
 
   const photoSections = [
     { title: 'The Rings', subtitle: 'A promise held close, and the little details that made it theirs.', ids: [6, 15, 19] },
-    { title: 'Ashirwad & Pooja', subtitle: 'Sacred rituals and the blessings that began this new chapter.', ids: [2, 14] },
-    { title: 'The Ring Exchange', subtitle: 'The moment two hands, and two futures, came together.', ids: [7, 8, 17] },
-    { title: 'Family, Together', subtitle: 'The people who made the celebration feel like home.', ids: [4, 5, 10, 11, 13, 20] },
-    { title: "Elders’ Ashirwad", subtitle: 'The warmth, wisdom and blessings of the generations before them.', ids: [3, 12] },
-    { title: 'Joyful Celebrations', subtitle: 'The laughter, sweetness and spontaneous moments in between.', ids: [1, 9, 16, 18, 21] },
+    { title: 'Ashirwad & Pooja', subtitle: 'Sacred rituals and the blessings that began this new chapter.', ids: [14, 2] },
+    { title: 'The Ring Exchange', subtitle: 'The moment two hands, and two futures, came together.', ids: [7, 8, 17, 22] },
+    { title: 'Joyful Celebrations', subtitle: 'The laughter, sweetness and spontaneous moments in between.', ids: [9, 16, 18, 21] },
+    { title: 'A Mother’s Blessing', subtitle: 'A loving touch and a lifetime of prayers.', ids: [23] },
+    { title: 'Family, Together', subtitle: 'The people, elders’ blessings and shared moments that made the celebration feel like home.', ids: [4, 5, 10, 11, 13, 3, 12] },
+    { title: 'A New Beginning', subtitle: 'Side by side, hand in hand, and ready for everything ahead.', ids: [20] },
   ];
 
   return (
@@ -193,10 +153,17 @@ export const EngagementExperience = ({ onBackToWedding }) => {
           </div>
 
           {/* Confirmed Date Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#7A1F2B] text-[#FFF9F0] border border-[#ECC875] text-xs font-display uppercase tracking-widest font-semibold shadow-md mb-3">
+          <motion.div
+            initial={prefersReducedMotion ? false : { opacity: 0, y: 10, scale: .96 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: prefersReducedMotion ? 0.01 : .7, delay: prefersReducedMotion ? 0 : .52, ease: [0.22, 1, 0.36, 1] }}
+            className="engagement-celebrated-date"
+          >
             <CheckCircle2 className="w-3.5 h-3.5 text-[#ECC875]" />
-            <span>Celebrated on {engagement.date} (Saturday)</span>
-          </div>
+            <span>Celebrated with love</span>
+            <i aria-hidden="true">✦</i>
+            <span>{engagement.date} · {engagement.day}</span>
+          </motion.div>
 
           <p className="font-serif text-sm sm:text-base text-[#6B5B57] italic leading-relaxed px-4">
             "{engagement.message}"
@@ -229,7 +196,9 @@ export const EngagementExperience = ({ onBackToWedding }) => {
                     <span className="hidden sm:block h-px flex-1 bg-gradient-to-l from-transparent to-[#C9A45C]/60" />
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
-                    {sectionPhotos.map((photo, index) => (
+                    {sectionPhotos.map((photo, index) => {
+                      const photoAspectRatio = photo.orientation === 'landscape' ? '3 / 2' : '2 / 3';
+                      return (
                       <motion.div
                         key={photo.id}
                         initial={{ opacity: 0, y: 18 }}
@@ -238,34 +207,13 @@ export const EngagementExperience = ({ onBackToWedding }) => {
                         transition={{ duration: 0.45, delay: index * 0.05 }}
                         whileHover={{ y: -4 }}
                         onClick={() => setActivePhotoIndex(photos.findIndex((item) => item.id === photo.id))}
-                        className="group relative aspect-[4/3] sm:aspect-[4/5] rounded-2xl overflow-hidden border border-[#C9A45C]/50 hover:border-[#C9A45C] bg-[#30080E] shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer"
+                        style={{ aspectRatio: photoAspectRatio }}
+                        className="group relative rounded-2xl overflow-hidden border border-[#C9A45C]/50 hover:border-[#C9A45C] bg-[#30080E] shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer"
                       >
-                        <CornerFiligree position="top-left" />
-                        <CornerFiligree position="top-right" />
-                        <CornerFiligree position="bottom-left" />
-                        <CornerFiligree position="bottom-right" />
-                        <img src={photo.src} alt={photo.alt} className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out" loading="lazy" />
-                        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none overflow-hidden">
-                          <div className="w-1/2 h-full bg-gradient-to-r from-transparent via-white/20 to-transparent animate-sheen" />
-                        </div>
-                        <div className="absolute top-4 left-4 z-20">
-                          <span className="px-3 py-1 rounded-full bg-[#1A050B]/80 text-[#ECC875] border border-[#ECC875]/70 text-[10px] font-display uppercase tracking-widest font-semibold backdrop-blur-md shadow-sm">{photo.tag}</span>
-                        </div>
-                        <div className="absolute top-4 right-4 z-20">
-                          <button onClick={(e) => handleLike(e, photo.id)} className={`p-2 rounded-full backdrop-blur-md border transition-transform active:scale-75 shadow-sm ${likedMap[photo.id] ? 'bg-[#7A1F2B]/90 border-[#ECC875] text-[#ECC875]' : 'bg-black/40 hover:bg-black/60 border-white/30 text-white'}`} title="Send love and blessings" aria-label={`Send love and blessings for ${photo.title}`} aria-pressed={!!likedMap[photo.id]}>
-                            <Heart className={`w-3.5 h-3.5 ${likedMap[photo.id] ? 'fill-[#ECC875] text-[#ECC875]' : ''}`} />
-                          </button>
-                        </div>
-                        <div className="absolute inset-x-0 bottom-0 z-20 p-4 sm:p-5 bg-gradient-to-t from-[#140207] via-[#1A050B]/85 to-transparent flex flex-col justify-end">
-                          <p className="font-heading text-base sm:text-lg font-bold text-[#FFF9F0] group-hover:text-[#ECC875] transition-colors">{photo.title}</p>
-                          <p className="font-serif text-xs text-[#F5EBDD]/80 italic line-clamp-1 mt-0.5">{photo.subtitle || photo.quote}</p>
-                          <div className="flex items-center justify-between mt-2 pt-2 border-t border-[#C9A45C]/30 text-[11px] text-[#ECC875]">
-                            <span className="inline-flex items-center gap-1 font-display tracking-wider"><Maximize2 className="w-3 h-3" /><span>Tap to enlarge</span></span>
-                            <span className="text-white/70 font-sans">&#9829; {likes[photo.id] || 45} blessings</span>
-                          </div>
-                        </div>
+                        <img src={photo.src} alt={photo.alt} className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.02]" loading="lazy" />
                       </motion.div>
-                    ))}
+                      );
+                    })}
                   </div>
                 </section>
               );
@@ -324,12 +272,6 @@ export const EngagementExperience = ({ onBackToWedding }) => {
                 Auspicious Shubh Muhurat • सानंद संपन्न
               </span>
             </div>
-            <div className="flex items-start justify-center gap-2.5 max-w-md mx-auto">
-              <MapPin className="w-4 h-4 text-[#7A1F2B] shrink-0 mt-0.5" />
-              <span className="font-medium text-[#4A3B37] text-center">
-                {engagement.venue}
-              </span>
-            </div>
           </div>
 
           {/* Shloka & Blessing note */}
@@ -337,17 +279,6 @@ export const EngagementExperience = ({ onBackToWedding }) => {
             "ईश्वर की असीम अनुकम्पा और पूज्य गुरुजनों व बुजुर्गों के शुभाशीर्वाद से सगाई एवं आशीर्वाद समारोह हर्षोल्लास के साथ संपन्न हुआ।"
           </p>
 
-          <div className="flex flex-wrap items-center justify-center gap-3 mt-4">
-            <a
-              href={wedding.googleMapsUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white hover:bg-[#FAF3E8] text-[#7A1F2B] border border-[#C9A45C]/60 text-xs font-display uppercase tracking-wider font-semibold transition-all shadow-sm active:scale-95"
-            >
-              <Navigation className="w-3.5 h-3.5 text-[#7A1F2B]" />
-              <span>View Venue on Maps</span>
-            </a>
-          </div>
         </motion.div>
 
         {/* BOTTOM NAVIGATION CTA */}
@@ -433,7 +364,7 @@ export const EngagementExperience = ({ onBackToWedding }) => {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.95 }}
                 transition={{ duration: 0.3 }}
-                className="max-h-[65vh] sm:max-h-[72vh] flex items-center justify-center rounded-2xl overflow-hidden border-2 border-[#ECC875]/60 shadow-2xl"
+                className="relative max-h-[65vh] sm:max-h-[72vh] flex items-center justify-center rounded-2xl overflow-hidden border-2 border-[#ECC875]/60 shadow-2xl"
               >
                 <img
                   src={photos[activePhotoIndex].src}

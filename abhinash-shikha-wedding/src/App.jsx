@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { WelcomeScreen } from './components/WelcomeScreen';
 import { InvitationCover } from './components/InvitationCover';
@@ -27,12 +27,13 @@ export const App = () => {
     }
     return 'cover';
   });
-  const [musicTrigger, setMusicTrigger] = useState(false);
+  const musicTrigger = true;
+  const [doorsAutoOpen, setDoorsAutoOpen] = useState(false);
 
   // Transitions
   const handleEnterFromWelcome = () => {
+    setDoorsAutoOpen(false);
     setCurrentScene('doors');
-    setMusicTrigger(true);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -42,20 +43,22 @@ export const App = () => {
   };
 
   const handleContinueFromGanesha = () => {
+    setDoorsAutoOpen(true);
     setCurrentScene('doors');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleSelectDoor = (choice) => {
+  const handleSelectDoor = useCallback((choice) => {
     if (choice === 'engagement') {
       setCurrentScene('engagement');
     } else {
       setCurrentScene('wedding');
     }
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+  }, []);
 
   const handleBackToDoors = () => {
+    setDoorsAutoOpen(false);
     setCurrentScene('doors');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -90,7 +93,7 @@ export const App = () => {
         )}
 
         {currentScene === 'doors' && (
-          <RoyalDoors key="doors" onSelectChoice={handleSelectDoor} />
+          <RoyalDoors key="doors" onSelectChoice={handleSelectDoor} autoOpen={doorsAutoOpen} />
         )}
 
         {currentScene === 'engagement' && (

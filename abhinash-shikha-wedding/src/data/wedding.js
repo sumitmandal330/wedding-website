@@ -396,6 +396,28 @@ export const weddingData = {
         quote: "A little sweetness shared, a memory kept forever.",
         orientation: "portrait",
       },
+      {
+        id: 22,
+        title: "The Ring Exchange",
+        subtitle: "A promise sealed with love",
+        tag: "Ring Exchange",
+        src: "/images/engagement/engagement-ring-exchange-hands.jpeg",
+        alt: "Abinash placing the engagement ring on Shikha’s henna-adorned hand",
+        caption: "A close-up of the moment their rings sealed a promise of love and togetherness.",
+        quote: "One promise, held close forever.",
+        orientation: "landscape",
+      },
+      {
+        id: 23,
+        title: "A Mother’s Blessing",
+        subtitle: "A loving touch and a lifetime of prayers",
+        tag: "Mother’s Blessing",
+        src: "/images/engagement/engagement-mothers-blessing.jpeg",
+        alt: "A mother lovingly blessing Abinash and Shikha during their engagement",
+        caption: "A mother’s loving hand and heartfelt prayers bless the couple as they begin their new chapter together.",
+        quote: "A mother’s blessings make every new beginning brighter.",
+        orientation: "portrait",
+      },
     ],
   },
 
@@ -411,7 +433,7 @@ export const weddingData = {
 
   // Background Audio Config
   music: {
-    title: "Auspicious Shehnai & Sitar Melody",
-    audioSrc: "https://assets.mixkit.co/music/preview/mixkit-indian-traditional-sitar-and-tabla-487.mp3",
+    title: "Wedding Music",
+    audioSrc: "/audio/wedding-invitation-music.mpeg",
   },
 };

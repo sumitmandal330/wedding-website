@@ -17,7 +17,6 @@ import {
   Music,
   Check,
   Copy,
-  CalendarPlus,
   Maximize2,
   Eye,
   EyeOff,
@@ -55,7 +54,7 @@ export const WeddingExperience = ({ onBackToDoors, onOpenEngagement }) => {
   const { wedding, couple, engagement } = weddingData;
   const ringExchangePhotos = engagement.photos.filter((photo) => (
     photo.src.includes('ring-exchange') || photo.src.includes('ring-detail')
-  ));
+  )).filter((_, index) => index === 1 || index === 3);
   const [activePhotoIndex, setActivePhotoIndex] = useState(null);
   const [selectedRitualTab, setSelectedRitualTab] = useState('all');
   const [copiedAddress, setCopiedAddress] = useState(false);
@@ -151,9 +150,9 @@ export const WeddingExperience = ({ onBackToDoors, onOpenEngagement }) => {
   const handleShare = () => {
     const text = `🌸 You are joyfully invited to the Wedding Celebrations of ${couple.groom} & ${couple.bride} (3 - 5 December 2026)! Scratch to reveal ceremony dates & view invitation:`;
     if (navigator.share) {
-      navigator.share({ title: `${couple.groom} & ${couple.bride} Wedding Invitation`, text, url: window.location.href }).catch(() => {});
+      navigator.share({ title: `${couple.groom} & ${couple.bride} Wedding Invitation`, text, url: 'https://wedding-website-nu-two-23.vercel.app/' }).catch(() => {});
     } else {
-      window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text + ' ' + window.location.href)}`, '_blank');
+      window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text + ' https://wedding-website-nu-two-23.vercel.app/')}`, '_blank');
     }
   };
 
@@ -161,25 +160,6 @@ export const WeddingExperience = ({ onBackToDoors, onOpenEngagement }) => {
     navigator.clipboard.writeText(wedding.venue);
     setCopiedAddress(true);
     setTimeout(() => setCopiedAddress(false), 2500);
-  };
-
-  // Google Calendar Link generator for ceremonies
-  const getGoogleCalendarUrl = (ceremony) => {
-    const dateMap = {
-      haldi: { start: '20261203T093000Z', end: '20261203T133000Z' }, // 3 Dec 3:00 PM IST (09:30 UTC)
-      aiburobhat: { start: '20261204T073000Z', end: '20261204T103000Z' }, // 4 Dec 1:00 PM IST (07:30 UTC)
-      mehndi: { start: '20261204T113000Z', end: '20261204T143000Z' }, // 4 Dec 5:00 PM IST (11:30 UTC)
-      sangeet: { start: '20261204T123000Z', end: '20261204T173000Z' }, // 4 Dec 6:00 PM IST (12:30 UTC)
-      marriage: { start: '20261205T133000Z', end: '20261205T213000Z' }, // 5 Dec 7:00 PM IST (13:30 UTC)
-    };
-    const timing = dateMap[ceremony.id] || { start: '20261205T133000Z', end: '20261205T213000Z' };
-    const title = `${couple.groom} & ${couple.bride} - ${ceremony.name} (${ceremony.bengaliName})`;
-    const details = `${ceremony.bengaliName} • ${ceremony.hindiName}\nDate: ${ceremony.date} | Time: ${ceremony.time}\n${ceremony.description}\nDress code: ${ceremony.dressCode}`;
-    return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(
-      title
-    )}&dates=${timing.start}/${timing.end}&details=${encodeURIComponent(details)}&location=${encodeURIComponent(
-      ceremony.venue
-    )}`;
   };
 
   const filteredCeremonies =
@@ -305,46 +285,9 @@ export const WeddingExperience = ({ onBackToDoors, onOpenEngagement }) => {
             </div>
           </motion.div>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-2 text-xs sm:text-sm text-[#F5EBDD] my-3 max-w-xl mx-auto">
-            <MapPin className="w-4 h-4 text-[#ECC875] shrink-0" />
-            <span className="font-medium text-center">
-              {wedding.venue}
-            </span>
-          </div>
-
           {/* Live Countdown Component */}
           <div className="my-5">
             <Countdown />
-          </div>
-
-          {/* Action Buttons: Directions & Copy Address */}
-          <div className="flex flex-wrap items-center justify-center gap-3 mt-4">
-            <a
-              href={wedding.googleMapsUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-gradient-to-r from-[#ECC875] via-[#C9A45C] to-[#B38D43] text-[#302522] font-semibold text-xs font-display uppercase tracking-widest hover:brightness-105 transition-all shadow-md active:scale-95"
-            >
-              <Navigation className="w-3.5 h-3.5 fill-current" />
-              <span>Get Directions to Venue</span>
-            </a>
-
-            <button
-              onClick={copyVenueAddress}
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/10 hover:bg-white/20 text-[#FFF9F0] border border-[#ECC875]/60 text-xs font-display uppercase tracking-wider font-semibold transition-all cursor-pointer shadow-sm active:scale-95"
-            >
-              {copiedAddress ? (
-                <>
-                  <Check className="w-3.5 h-3.5 text-emerald-400" />
-                  <span>Address Copied!</span>
-                </>
-              ) : (
-                <>
-                  <Copy className="w-3.5 h-3.5 text-[#ECC875]" />
-                  <span>Copy Address</span>
-                </>
-              )}
-            </button>
           </div>
         </motion.div>
 
@@ -560,39 +503,6 @@ export const WeddingExperience = ({ onBackToDoors, onOpenEngagement }) => {
                           />
                         </div>
 
-                        {/* Venue details row */}
-                        <div className="flex items-start gap-2 p-2.5 rounded-xl bg-white/70 border border-[#C9A45C]/30 text-xs text-[#302522] mb-3">
-                          <MapPin className="w-3.5 h-3.5 text-[#7A1F2B] shrink-0 mt-0.5" />
-                          <span className="text-[11px] text-[#4A3B37] leading-tight">
-                            {ceremony.venue}
-                          </span>
-                        </div>
-
-                        {/* Interactive Action Shortcuts */}
-                        <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-[#C9A45C]/20">
-                          {/* Add to Google Calendar */}
-                          <a
-                            href={getGoogleCalendarUrl(ceremony)}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#7A1F2B] text-[#FFF9F0] border border-[#ECC875] text-[11px] font-display uppercase tracking-wider font-semibold hover:bg-[#54111B] transition-all shadow-sm active:scale-95"
-                          >
-                            <CalendarPlus className="w-3 h-3 text-[#ECC875]" />
-                            <span>Add to Calendar</span>
-                          </a>
-
-                          {/* Get Directions */}
-                          <a
-                            href={wedding.googleMapsUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white hover:bg-[#F5EBDD] text-[#7A1F2B] border border-[#C9A45C]/50 text-[11px] font-display uppercase tracking-wider font-semibold transition-all shadow-sm active:scale-95"
-                          >
-                            <Navigation className="w-3 h-3 text-[#7A1F2B]" />
-                            <span>Venue Route</span>
-                          </a>
-
-                        </div>
                       </div>
                     </div>
                   </motion.div>
@@ -618,10 +528,6 @@ export const WeddingExperience = ({ onBackToDoors, onOpenEngagement }) => {
           <h3 className="font-heading text-xl sm:text-2xl text-[#302522] font-semibold mb-2">
             {wedding.venue}
           </h3>
-          <p className="text-xs text-[#6B5B57] max-w-md mx-auto mb-6">
-            Bari Co-Operative Colony, Bokaro Steel City, Jharkhand — 827012
-          </p>
-
           <div className="flex flex-wrap items-center justify-center gap-3">
             <a
               href={wedding.googleMapsUrl}
@@ -659,9 +565,25 @@ export const WeddingExperience = ({ onBackToDoors, onOpenEngagement }) => {
           viewport={{ once: true, margin: '-70px' }}
           transition={{ duration: prefersReducedMotion ? 0.01 : 0.75, ease: 'easeOut' }}
           aria-labelledby="engagement-memories-title"
-          className="engagement-invite relative grid lg:grid-cols-2 items-center gap-8 lg:gap-14 rounded-[2rem] p-5 sm:p-8 lg:p-12 mb-12 overflow-hidden"
+          className="engagement-invite relative flex flex-col items-center gap-7 rounded-[2rem] p-5 sm:p-8 lg:p-12 mb-12 overflow-hidden"
         >
           <div className="engagement-invite-ornament" aria-hidden="true" />
+          <div className="relative z-10 w-full text-center py-3">
+            <p className="font-display text-[10px] sm:text-xs uppercase tracking-[0.32em] text-[#8C6935] font-semibold mb-3">
+              A Chapter of Love
+            </p>
+            <h2 id="engagement-memories-title" className="font-heading text-3xl sm:text-4xl xl:text-5xl leading-tight text-[#54111B] font-medium">
+              Welcome to Our <span className="text-[#9E7933] italic">Engagement</span> Memories
+            </h2>
+            <div className="engagement-divider my-5" aria-hidden="true"><span>❦</span></div>
+            <p className="font-serif text-lg sm:text-xl text-[#4D3932] leading-relaxed">
+              A beautiful beginning, a promise of forever, and moments we will cherish for a lifetime.
+            </p>
+            <p className="font-serif text-base sm:text-lg text-[#6B5B57] leading-relaxed mt-3">
+              Join us in reliving the joy, laughter, and love from our engagement ceremony through these precious memories.
+            </p>
+          </div>
+
           <motion.div
             initial={prefersReducedMotion ? false : { opacity: 0, scale: 0.96 }}
             whileInView={{ opacity: 1, scale: 1 }}
@@ -686,29 +608,14 @@ export const WeddingExperience = ({ onBackToDoors, onOpenEngagement }) => {
             ))}
           </motion.div>
 
-          <div className="relative z-10 text-center lg:text-left py-3 lg:py-7">
-            <p className="font-display text-[10px] sm:text-xs uppercase tracking-[0.32em] text-[#8C6935] font-semibold mb-3">
-              A Chapter of Love
-            </p>
-            <h2 id="engagement-memories-title" className="font-heading text-3xl sm:text-4xl xl:text-5xl leading-tight text-[#54111B] font-medium">
-              Welcome to Our <span className="text-[#9E7933] italic">Engagement</span> Memories
-            </h2>
-            <div className="engagement-divider my-5" aria-hidden="true"><span>❦</span></div>
-            <p className="font-serif text-lg sm:text-xl text-[#4D3932] leading-relaxed">
-              A beautiful beginning, a promise of forever, and moments we will cherish for a lifetime.
-            </p>
-            <p className="font-serif text-base sm:text-lg text-[#6B5B57] leading-relaxed mt-3">
-              Join us in reliving the joy, laughter, and love from our engagement ceremony through these precious memories.
-            </p>
-            <button
-              type="button"
-              onClick={onOpenEngagement}
-              className="engagement-gallery-cta mt-7 inline-flex items-center justify-center gap-3 rounded-full px-6 sm:px-7 py-3.5 text-xs sm:text-sm font-display uppercase tracking-[0.12em] font-semibold"
-            >
-              <span>Explore Our Engagement Gallery</span>
-              <ArrowRight className="w-4 h-4" />
-            </button>
-          </div>
+          <button
+            type="button"
+            onClick={onOpenEngagement}
+            className="engagement-gallery-cta relative z-10 inline-flex items-center justify-center gap-3 rounded-full px-6 sm:px-7 py-3.5 text-xs sm:text-sm font-display uppercase tracking-[0.12em] font-semibold"
+          >
+            <span>Explore Our Engagement Gallery</span>
+            <ArrowRight className="w-4 h-4" />
+          </button>
         </motion.section>
 
         {/* Return to Royal Gateway Button */}
