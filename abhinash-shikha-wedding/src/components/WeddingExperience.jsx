@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import {
   ArrowLeft,
-  ArrowRight,
   MapPin,
   Sun,
   Sparkles,
@@ -647,7 +646,6 @@ export const WeddingExperience = ({ onBackToDoors, onOpenEngagement }) => {
             className="engagement-gallery-cta relative z-10 inline-flex items-center justify-center gap-3 rounded-full px-6 sm:px-7 py-3.5 text-xs sm:text-sm font-display uppercase tracking-[0.12em] font-semibold"
           >
             <span>Explore Our Engagement Gallery</span>
-            <ArrowRight className="w-4 h-4" />
           </button>
         </motion.section>
 

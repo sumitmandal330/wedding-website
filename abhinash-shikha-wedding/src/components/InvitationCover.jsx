@@ -11,7 +11,7 @@ export const InvitationCover = ({ onOpen }) => {
   const handleOpen = () => {
     if (isOpening) return;
     setIsOpening(true);
-    timerRef.current = setTimeout(onOpen, prefersReducedMotion ? 1800 : 3000);
+    timerRef.current = setTimeout(onOpen, prefersReducedMotion ? 1800 : 4000);
   };
 
   return (
@@ -32,7 +32,7 @@ export const InvitationCover = ({ onOpen }) => {
           animate={isOpening
             ? { opacity: 1, scale: 1.08, filter: 'blur(0px)' }
             : { opacity: 0.08, scale: 0.78, filter: 'blur(10px)' }}
-          transition={{ duration: prefersReducedMotion ? 0.01 : 2.8, delay: prefersReducedMotion ? 0 : 0.15, ease: [0.22, 0.68, 0.24, 1] }}
+          transition={{ duration: prefersReducedMotion ? 0.01 : 3.8, delay: prefersReducedMotion ? 0 : 0.15, ease: [0.22, 0.68, 0.24, 1] }}
           aria-hidden="true"
         >
           {isOpening && (
