@@ -27,7 +27,7 @@ export const App = () => {
     }
     return 'cover';
   });
-  const musicTrigger = true;
+  const musicTrigger = false;
   const [doorsAutoOpen, setDoorsAutoOpen] = useState(false);
   const [doorsReturnScene, setDoorsReturnScene] = useState('cover');
 
@@ -98,7 +98,7 @@ export const App = () => {
         )}
 
         {currentScene === 'ganesha' && (
-          <GaneshaBlessing key="ganesha" onContinue={handleContinueFromGanesha} />
+          <GaneshaBlessing key="ganesha" onContinue={handleContinueFromGanesha} onOpenEngagement={handleOpenEngagement} />
         )}
 
         {currentScene === 'doors' && (
@@ -121,3 +121,4 @@ export const App = () => {
 };
 
 export default App;
+

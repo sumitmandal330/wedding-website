@@ -328,8 +328,8 @@ a:focus-visible {
 .invitation-card-perspective {
   position: relative;
   z-index: 2;
-  width: min(88vw, 1020px, 97svh);
-  aspect-ratio: 1.34;
+  width: min(88vw, 55.2svh, 620px);
+  aspect-ratio: 9 / 16;
   perspective: 1500px;
 }
 
@@ -354,9 +354,16 @@ a:focus-visible {
   content: "";
   position: absolute;
   inset: -8px;
-  background: url('/images/ganesha/auspicious-wedding-blessing.png') center/cover no-repeat;
+  background: radial-gradient(ellipse at 50% 28%, rgba(236, 200, 117, .2), transparent 66%), linear-gradient(145deg, #3b1a1c, #1a0b10);
   filter: blur(14px) brightness(.56);
   transform: scale(1.06);
+}
+
+.invitation-card-reveal.is-opening::before {
+  background-image: url('/images/ganesha/auspicious-wedding-blessing.png');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .invitation-card-reveal::after {
@@ -390,7 +397,7 @@ a:focus-visible {
   background-color: #6e2524;
   background-image: linear-gradient(120deg, rgba(255, 250, 229, .09), transparent 36%, rgba(79, 12, 20, .08)), url('/images/invitation/royal-invitation-cover.png');
   background-position: center, center 48%;
-  background-size: 100% 100%, 160% 138%;
+  background-size: 100% 100%, 100% 100%;
   background-repeat: no-repeat;
   box-shadow: 0 27px 65px rgba(0, 0, 0, .42), inset 0 1px 1px rgba(255, 255, 255, .72), inset 0 -8px 20px rgba(150, 109, 52, .08);
   backface-visibility: hidden;
@@ -1026,11 +1033,11 @@ a:focus-visible {
   }
 }
 
-.wedding-date-scratch-shell {
+.wedding-date-featured-shell {
   max-width: 430px;
 }
 
-.wedding-date-scratch-shell>div>p {
+.wedding-date-featured-shell>div>p {
   line-height: 1.3;
   text-wrap: balance;
 }
@@ -1101,7 +1108,7 @@ a:focus-visible {
 
   .invitation-card-cover {
     border: 0;
-    background-size: 100% 100%, cover;
+    background-size: 100% 100%, 100% 100%;
     background-position: center, center;
     box-shadow: none;
   }
@@ -1114,11 +1121,11 @@ a:focus-visible {
     width: 76vw;
   }
 
-  .wedding-date-scratch-shell {
+  .wedding-date-featured-shell {
     max-width: 390px;
   }
 
-  .wedding-date-scratch-shell>div>p {
+  .wedding-date-featured-shell>div>p {
     font-size: 1.08rem;
     margin-bottom: .65rem;
   }
@@ -1411,4 +1418,72 @@ body {
   .invitation-card-cover {
     transition: none;
   }
+}
+
+.couple-invitation-actions { display:flex; flex-wrap:wrap; justify-content:center; align-items:center; gap:10px; margin-top:14px; }
+.couple-invitation-actions .couple-open-invitation {
+  flex:0 0 210px; box-sizing:border-box; width:210px; height:46px; min-height:46px; padding:10px 14px;
+  display:inline-flex; align-items:center; justify-content:center; gap:7px; border-radius:999px;
+  font-size:9px; line-height:1.2; letter-spacing:.1em; text-align:center;
+}
+.couple-open-engagement { background:rgba(73,21,29,.88); color:#f5dfa5; }
+.couple-open-engagement span { color:#f5dfa5; }
+.couple-portrait-frame { flex-shrink:0; }
+@media (max-width:560px) {
+  .couple-invitation-actions { gap:8px; margin-top:10px; }
+  .couple-invitation-actions .couple-open-invitation { flex-basis:185px; width:185px; height:42px; min-height:42px; padding:8px 12px; font-size:8px; }
+}
+@media (max-width:639px) {
+  .couple-invitation-scene {
+    position:relative !important; inset:auto !important; height:auto; min-height:100svh; overflow:visible;
+    justify-content:flex-start; gap:11px; padding:18px 14px 48px;
+  }
+  .couple-invitation-frame { inset:8px; }
+  .couple-invitation-message { width:100%; box-sizing:border-box; padding:8px 10px 10px; }
+  .couple-invitation-title { font-size:clamp(22px, 5vw, 27px); line-height:1.2; margin-bottom:5px; }
+}
+
+/* Wedding dates are shown directly in themed square keepsake cards. */
+.wedding-date-card {
+  position:relative; isolation:isolate; width:min(100%, 230px); aspect-ratio:1; margin-inline:auto; padding:28px 18px 20px;
+  box-sizing:border-box; display:flex; flex-direction:column; align-items:center; justify-content:center; overflow:hidden;
+  border:1px solid rgba(255,231,176,.9); border-radius:22px; color:#fff8e8; text-align:center;
+  background-color:#321017; box-shadow:0 12px 28px rgba(52,19,24,.25),inset 0 0 0 5px rgba(255,246,222,.13);
+}
+.wedding-date-card-background { position:absolute; z-index:0; inset:0; width:100%; height:100%; object-fit:cover; }
+.wedding-date-card::after { content:""; position:absolute; z-index:1; inset:0; background:linear-gradient(150deg,rgba(45,12,20,.64),rgba(64,17,28,.78)); pointer-events:none; }
+.wedding-date-card::before { content:""; position:absolute; z-index:2; inset:8px; border:1px solid rgba(255,231,176,.48); border-radius:15px; pointer-events:none; }
+.wedding-date-card-name { margin:0 0 5px; color:#ffedc4; font-family:var(--font-display,Georgia,serif); font-size:10px; font-weight:600; letter-spacing:.16em; text-transform:uppercase; }
+.wedding-date-card-day-number { margin:0; color:#fff4d9; font-family:var(--font-heading,Georgia,serif); font-size:clamp(54px,8vw,68px); font-weight:600; line-height:.95; text-shadow:0 3px 16px rgba(0,0,0,.3); }
+.wedding-date-card-month { margin:5px 0 0; color:#ffedc4; font-family:var(--font-display,Georgia,serif); font-size:13px; letter-spacing:.12em; text-transform:uppercase; }
+.wedding-date-card-divider { width:70%; display:flex; align-items:center; gap:8px; margin:9px 0 6px; color:#f1d18b; font-size:10px; }
+.wedding-date-card-divider::before,.wedding-date-card-divider::after { content:""; height:1px; flex:1; background:rgba(255,231,176,.55); }
+.wedding-date-card-weekday,.wedding-date-card-time { margin:1px 0; color:#fff8e8; font-family:var(--font-display,Georgia,serif); font-size:11px; letter-spacing:.08em; }
+.wedding-date-card-time { color:#f6d990; font-weight:600; }
+.wedding-date-card-flourish { position:absolute; top:17px; right:19px; color:#f5d995; font-size:14px; opacity:.9; }
+.wedding-date-card-flourish-bottom { top:auto; right:auto; bottom:15px; left:19px; transform:rotate(180deg); }
+.wedding-date-card[data-theme="haldi"]::after { background:linear-gradient(145deg,rgba(78,53,10,.55),rgba(66,39,7,.76)); }
+.wedding-date-card[data-theme="mehndi"]::after { background:linear-gradient(145deg,rgba(12,54,36,.56),rgba(9,43,29,.78)); }
+.wedding-date-card[data-theme="sangeet"]::after { background:linear-gradient(145deg,rgba(40,25,66,.56),rgba(30,18,48,.8)); }
+.wedding-date-card[data-theme="aiburobhat"]::after { background:linear-gradient(145deg,rgba(79,39,23,.55),rgba(56,26,17,.78)); }
+@media (max-width:639px) {
+  .wedding-date-card { width:min(100%, 220px); padding:26px 16px 18px; }
+  .wedding-date-card-day-number { font-size:56px; }
+}
+.wedding-date-card > :not(.wedding-date-card-background) { position:relative; z-index:3; }
+.wedding-date-card .wedding-date-card-flourish { position:absolute; }
+.wedding-date-card-compact {
+  width:min(100%, 340px); aspect-ratio:auto; min-height:96px; padding:18px 42px 18px 24px;
+  flex-direction:column; justify-content:center; border-radius:18px; text-align:center;
+  box-shadow:0 8px 20px rgba(52,19,24,.2),inset 0 0 0 4px rgba(255,246,222,.13);
+}
+.wedding-date-card-compact::before { inset:6px; border-radius:12px; }
+.wedding-date-card-compact-copy { position:relative; z-index:3; }
+.wedding-date-card-compact-date { margin:0; color:#fff4d9; font-family:var(--font-heading,Georgia,serif); font-size:clamp(17px,2vw,21px); font-weight:600; line-height:1.25; text-shadow:0 2px 10px rgba(0,0,0,.35); }
+.wedding-date-card-compact-time { display:flex; align-items:center; justify-content:center; gap:6px; margin:5px 0 0; color:#f6d990; font-family:var(--font-display,Georgia,serif); font-size:11px; font-weight:600; letter-spacing:.08em; }
+.wedding-date-card-compact-time svg { width:13px; height:13px; }
+.wedding-date-card-compact .wedding-date-card-flourish { top:50%; right:16px; transform:translateY(-50%); }
+@media (max-width:639px) {
+  .wedding-date-card-compact { width:min(100%, 320px); min-height:88px; padding:16px 38px 16px 20px; }
+  .wedding-date-card-compact-date { font-size:18px; }
 }

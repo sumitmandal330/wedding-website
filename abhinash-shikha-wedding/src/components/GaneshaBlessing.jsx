@@ -4,7 +4,7 @@ import { motion, useReducedMotion } from 'framer-motion';
 const invitation = 'hum apni shaadi mein dil se aamantrit karte hain. Aapki maujoodgi aur aashirvaad hamare liye bahut khaas hain. Humein aapka intezaar rahega!';
 const invitationWords = invitation.split(' ');
 
-export const GaneshaBlessing = ({ onContinue }) => {
+export const GaneshaBlessing = ({ onContinue, onOpenEngagement }) => {
   const [visibleWords, setVisibleWords] = useState(0);
   const reducedMotion = useReducedMotion();
 
@@ -78,19 +78,22 @@ export const GaneshaBlessing = ({ onContinue }) => {
         </p>
       </motion.section>
 
-      <motion.button
-        type="button"
-        className="couple-open-invitation"
-        onClick={onContinue}
-        disabled={!textComplete}
+      <motion.div
+        className="couple-invitation-actions"
         initial={reducedMotion ? false : { opacity: 0, y: 12 }}
         animate={{ opacity: textComplete ? 1 : 0, y: textComplete ? 0 : 12 }}
         transition={{ duration: reducedMotion ? 0.01 : 0.65 }}
       >
-        Open Wedding Invitation <span aria-hidden="true">✦</span>
-      </motion.button>
+        <button type="button" className="couple-open-invitation" onClick={onContinue} disabled={!textComplete}>
+          Open Wedding Invitation <span aria-hidden="true">✦</span>
+        </button>
+        <button type="button" className="couple-open-invitation couple-open-engagement" onClick={onOpenEngagement} disabled={!textComplete}>
+          Explore Engagement Moments <span aria-hidden="true">✦</span>
+        </button>
+      </motion.div>
     </motion.main>
   );
 };
 
 export default GaneshaBlessing;
+

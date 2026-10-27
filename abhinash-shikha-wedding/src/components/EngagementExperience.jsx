@@ -2,13 +2,10 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import {
   ArrowLeft,
-  Calendar,
-  Clock,
   X,
   ChevronLeft,
   ChevronRight,
   Share2,
-  Camera,
   CheckCircle2,
   Heart,
 } from 'lucide-react';
@@ -76,11 +73,11 @@ export const EngagementExperience = ({ onBackToWedding }) => {
 
   const photoSections = [
     { title: 'The Rings', subtitle: 'A promise held close, and the little details that made it theirs.', ids: [6, 15, 19] },
-    { title: 'Ashirwad & Pooja', subtitle: 'Sacred rituals and the blessings that began this new chapter.', ids: [14, 2] },
+    { title: 'Pooja', subtitle: 'Sacred rituals and the blessings that began this new chapter.', ids: [14, 2] },
     { title: 'The Ring Exchange', subtitle: 'The moment two hands, and two futures, came together.', ids: [7, 8, 17, 22] },
     { title: 'Joyful Celebrations', subtitle: 'The laughter, sweetness and spontaneous moments in between.', ids: [9, 16, 18, 21] },
     { title: 'A Mother’s Blessing', subtitle: 'A loving touch and a lifetime of prayers.', ids: [23] },
-    { title: 'Family, Together', subtitle: 'The people, elders’ blessings and shared moments that made the celebration feel like home.', ids: [4, 5, 10, 11, 13, 3, 12] },
+    { title: 'Family, Together', subtitle: 'Family, blessings and shared moments that felt like home.', ids: [4, 5, 10, 11, 13, 3, 12, 25] },
     { title: 'A New Beginning', subtitle: 'Side by side, hand in hand, and ready for everything ahead.', ids: [20] },
   ];
 
@@ -173,11 +170,6 @@ export const EngagementExperience = ({ onBackToWedding }) => {
         {/* SECTIONED ENGAGEMENT ALBUM */}
         <div className="mb-14">
           <div className="text-center mb-10 sm:mb-14">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#7A1F2B]/10 border border-[#C9A45C]/30 text-[11px] font-display uppercase tracking-widest text-[#7A1F2B] font-semibold mb-2">
-              <Camera className="w-3.5 h-3.5 text-[#C9A45C]" />
-              <span>Memories of Forever &bull; 7 March 2026</span>
-            </div>
-            <h2 className="font-heading text-3xl sm:text-5xl text-[#7A1F2B] font-bold">Engagement &amp; Ashirwadi Album</h2>
             <p className="font-serif text-xs sm:text-sm text-[#6B5B57] italic mt-2">A celebration told in chapters. Tap any photograph to view it up close.</p>
           </div>
 
@@ -222,65 +214,7 @@ export const EngagementExperience = ({ onBackToWedding }) => {
           </div>
         </div>
 
-        {/* ═══════════════════════════════════════════════════════════════════════════
-            ROYAL COMMEMORATIVE PATRIKA / SMRITI PATRIKA (7 MARCH 2026)
-            ═══════════════════════════════════════════════════════════════════════════ */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-          className="relative max-w-2xl mx-auto rounded-3xl bg-gradient-to-b from-[#FFFDF9] via-[#FAF3E8] to-[#F5EBDD] border-2 border-[#C9A45C]/70 p-6 sm:p-9 shadow-xl mb-12 text-center overflow-hidden"
-        >
-          {/* Subtle Corner Filigree */}
-          <CornerFiligree position="top-left" />
-          <CornerFiligree position="top-right" />
-          <CornerFiligree position="bottom-left" />
-          <CornerFiligree position="bottom-right" />
-
-          {/* Golden Royal Crest Icon */}
-          <div className="w-12 h-12 mx-auto mb-3 rounded-full bg-gradient-to-b from-[#7A1F2B] to-[#4F131B] border-2 border-[#ECC875] flex items-center justify-center shadow-md">
-            <svg
-              className="w-6 h-6 text-[#ECC875]"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.5"
-            >
-              <circle cx="9" cy="12" r="5" />
-              <circle cx="15" cy="12" r="5" />
-              <path d="M12 7 L12 5" strokeLinecap="round" />
-            </svg>
-          </div>
-
-          <p className="font-display text-xs uppercase tracking-[0.25em] text-[#7A1F2B] font-bold mb-1">
-            शुभ सगाई एवं आशीर्वाद स्मृति पत्र
-          </p>
-          <h3 className="font-heading text-2xl sm:text-3xl text-[#302522] font-semibold mb-2">
-            Engagement &amp; Ashirwadi Memorial
-          </h3>
-
-          <div className="space-y-3 py-4 border-y border-[#C9A45C]/30 text-xs sm:text-sm text-[#302522] my-4">
-            <div className="flex items-center justify-center gap-2.5">
-              <Calendar className="w-4 h-4 text-[#7A1F2B]" />
-              <span className="font-bold text-[#7A1F2B] text-base">
-                7 March 2026 (शनिवार • Saturday)
-              </span>
-            </div>
-            <div className="flex items-center justify-center gap-2.5">
-              <Clock className="w-4 h-4 text-[#7A1F2B]" />
-              <span className="font-medium text-[#4A3B37]">
-                Auspicious Shubh Muhurat • सानंद संपन्न
-              </span>
-            </div>
-          </div>
-
-          {/* Shloka & Blessing note */}
-          <p className="font-serif text-xs sm:text-sm text-[#6B5B57] italic leading-relaxed px-4 mb-4">
-            "ईश्वर की असीम अनुकम्पा और पूज्य गुरुजनों व बुजुर्गों के शुभाशीर्वाद से सगाई एवं आशीर्वाद समारोह हर्षोल्लास के साथ संपन्न हुआ।"
-          </p>
-
-        </motion.div>
+        
 
         {/* Personal wedding invitation from the couple */}
         <motion.section

@@ -11,7 +11,7 @@ export const InvitationCover = ({ onOpen }) => {
   const handleOpen = () => {
     if (isOpening) return;
     setIsOpening(true);
-    timerRef.current = setTimeout(onOpen, prefersReducedMotion ? 2200 : 3000);
+    timerRef.current = setTimeout(onOpen, prefersReducedMotion ? 1800 : 3000);
   };
 
   return (
@@ -27,13 +27,24 @@ export const InvitationCover = ({ onOpen }) => {
       <div className="invitation-cover-arch" aria-hidden="true" />
       <div className="invitation-card-perspective">
         <motion.div
-          className="invitation-card-reveal"
+          className={`invitation-card-reveal ${isOpening ? 'is-opening' : ''}`}
           initial={false}
-          animate={isOpening ? { opacity: 1, scale: 1 } : { opacity: 0.12, scale: 0.96 }}
-          transition={{ duration: prefersReducedMotion ? 0.01 : 1.65, delay: prefersReducedMotion ? 0 : 0.95, ease: [0.22, 0.68, 0.24, 1] }}
+          animate={isOpening
+            ? { opacity: 1, scale: 1.08, filter: 'blur(0px)' }
+            : { opacity: 0.08, scale: 0.78, filter: 'blur(10px)' }}
+          transition={{ duration: prefersReducedMotion ? 0.01 : 2.8, delay: prefersReducedMotion ? 0 : 0.15, ease: [0.22, 0.68, 0.24, 1] }}
           aria-hidden="true"
         >
-          <img src="/images/ganesha/auspicious-wedding-blessing.png" alt="" draggable="false" loading="lazy" decoding="async" />
+          {isOpening && (
+            <img
+              src="/images/ganesha/auspicious-wedding-blessing.png"
+              alt=""
+              draggable="false"
+              loading="eager"
+              fetchPriority="high"
+              decoding="async"
+            />
+          )}
         </motion.div>
 
         <motion.button
@@ -52,7 +63,6 @@ export const InvitationCover = ({ onOpen }) => {
             : { duration: prefersReducedMotion ? 0.01 : 0.85, delay: 0.12, ease: [0.2, 0.8, 0.2, 1] }}
           style={{ transformOrigin: 'left center', transformStyle: 'preserve-3d' }}
         >
-          <span className="invitation-cover-prompt" aria-hidden="true">Tap here to open</span>
           <span className="sr-only">INVITATION</span>
           <span className="invitation-card-sheen" aria-hidden="true" />
         </motion.button>

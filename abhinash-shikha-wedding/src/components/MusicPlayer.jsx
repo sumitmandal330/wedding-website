@@ -126,7 +126,7 @@ export const MusicPlayer = ({ autoPlayTrigger }) => {
         ref={audioRef}
         src={weddingData.music.audioSrc}
         loop
-        preload="auto"
+        preload="none"
         onError={() => setUseSynth(true)}
       />
 

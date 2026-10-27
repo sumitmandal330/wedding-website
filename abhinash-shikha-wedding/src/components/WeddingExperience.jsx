@@ -15,16 +15,62 @@ import {
   Utensils,
   Flame,
   Music,
+  Clock,
   Check,
   Copy,
   Maximize2,
-  Eye,
-  EyeOff,
 } from 'lucide-react';
-import confetti from 'canvas-confetti';
 import { weddingData } from '../data/wedding';
 import { Countdown } from './Countdown';
-import { ScratchCard } from './ScratchCard';
+
+const CEREMONY_DATE_IMAGES = {
+  haldi: '/images/ceremonies/haldi-date-background.png',
+  aiburobhat: '/images/ceremonies/aiburobhat.jpg',
+  mehndi: '/images/ceremonies/mehndi.jpg',
+  sangeet: '/images/ceremonies/sangeet.jpg',
+  marriage: '/images/ceremonies/marriage-date-background.jpeg',
+};
+
+const WeddingDateCard = ({ date, day, time, name, image, theme = 'rose', compact = false }) => {
+  const [dayNumber, month, year] = date.split(' ');
+
+  if (compact) {
+    return (
+      <div
+        className="wedding-date-card wedding-date-card-compact"
+        data-theme={theme}
+        role="group"
+        aria-label={`${name}: ${date}, ${time}`}
+      >
+        <img className="wedding-date-card-background" src={image} alt="" aria-hidden="true" loading="lazy" decoding="async" />
+        <span className="wedding-date-card-flourish" aria-hidden="true">&hearts;</span>
+        <div className="wedding-date-card-compact-copy">
+          <p className="wedding-date-card-compact-date">{date}</p>
+          <p className="wedding-date-card-compact-time"><Clock aria-hidden="true" />{time}</p>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div
+      className="wedding-date-card"
+      data-theme={theme}
+      role="group"
+      aria-label={`${name}: ${date}, ${day}, ${time}`}
+    >
+      <img className="wedding-date-card-background" src={image} alt="" aria-hidden="true" loading="lazy" decoding="async" />
+      <span className="wedding-date-card-flourish" aria-hidden="true">&hearts;</span>
+      <p className="wedding-date-card-name">{name}</p>
+      <p className="wedding-date-card-day-number">{dayNumber}</p>
+      <p className="wedding-date-card-month">{month} {year}</p>
+      <span className="wedding-date-card-divider" aria-hidden="true"><i>&#10022;</i></span>
+      <p className="wedding-date-card-weekday">{day}</p>
+      <p className="wedding-date-card-time">{time}</p>
+      <span className="wedding-date-card-flourish wedding-date-card-flourish-bottom" aria-hidden="true">&hearts;</span>
+    </div>
+  );
+};
 
 // Ornate Corner Filigree Ornament
 const CornerFiligree = ({ position = 'top-left' }) => {
@@ -58,25 +104,6 @@ export const WeddingExperience = ({ onBackToDoors, onOpenEngagement }) => {
   const [activePhotoIndex, setActivePhotoIndex] = useState(null);
   const [selectedRitualTab, setSelectedRitualTab] = useState('all');
   const [copiedAddress, setCopiedAddress] = useState(false);
-  const [allDatesRevealed, setAllDatesRevealed] = useState(false);
-
-  const toggleRevealAllDates = () => {
-    const next = !allDatesRevealed;
-    setAllDatesRevealed(next);
-    if (next) {
-      try {
-        confetti({
-          particleCount: 50,
-          spread: 80,
-          origin: { y: 0.5 },
-          colors: ['#ECC875', '#FFE082', '#FFD54F', '#7A1F2B', '#FFFFFF'],
-        });
-      } catch {
-        // ignore
-      }
-    }
-  };
-
   const getCeremonyTheme = (colorTheme) => {
     switch (colorTheme) {
       case 'amber':
@@ -148,7 +175,7 @@ export const WeddingExperience = ({ onBackToDoors, onOpenEngagement }) => {
   };
 
   const handleShare = () => {
-    const text = `🌸 You are joyfully invited to the Wedding Celebrations of ${couple.groom} & ${couple.bride} (3 - 5 December 2026)! Scratch to reveal ceremony dates & view invitation:`;
+    const text = `🌸 You are joyfully invited to the Wedding Celebrations of ${couple.groom} & ${couple.bride} (3 - 5 December 2026)! Explore ceremony dates & view invitation:`;
     if (navigator.share) {
       navigator.share({ title: `${couple.groom} & ${couple.bride} Wedding Invitation`, text, url: 'https://wedding-website-nu-two-23.vercel.app/' }).catch(() => {});
     } else {
@@ -261,23 +288,19 @@ export const WeddingExperience = ({ onBackToDoors, onOpenEngagement }) => {
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ type: 'spring', damping: 15, delay: 0.3 }}
-            className="wedding-date-scratch-shell my-3 mx-auto w-full max-w-md"
+            className="wedding-date-featured-shell my-3 mx-auto w-full max-w-md"
           >
             <div>
               <p className="font-heading text-lg sm:text-xl text-[#FFF9F0] mb-3">
                 Every Beautiful Story Has a Special Day
               </p>
-              <ScratchCard
-                id="main-wedding-date"
+              <WeddingDateCard
                 date={wedding.date}
                 day={wedding.ceremonies.find((ceremony) => ceremony.isMainEvent)?.day || wedding.day}
                 time={wedding.ceremonies.find((ceremony) => ceremony.isMainEvent)?.time || 'Wedding ceremony'}
-                ceremonyName="Our Wedding Day"
-                bengaliName="Our Wedding Day"
-                promptTitle="Scratch to Reveal Our Wedding Date"
-                promptInstruction="Scratch gently to uncover the date"
-                allowRescratch={false}
-                isFeatured
+                name="Our Wedding Day"
+                image="/images/couple-invitation.jpeg"
+                theme="marriage"
               />
               <span className="hidden block text-xs font-display uppercase tracking-widest text-[#F5EBDD]/90 mt-1">
                 Saturday • শুভ লগ্ন ও সম্প্রদান
@@ -310,7 +333,7 @@ export const WeddingExperience = ({ onBackToDoors, onOpenEngagement }) => {
               Ceremonies in Divine Sequence
             </h2>
             <p className="font-serif text-xs sm:text-sm text-[#6B5B57] italic mt-1.5 max-w-xl mx-auto">
-              Scratch each ceremony card below with your mouse or finger to unveil the auspicious date and time!
+              Explore each ceremony date and time below.
             </p>
 
             {/* Quick Interactive Timeline Tabs & Master Reveal-All Control */}
@@ -318,12 +341,12 @@ export const WeddingExperience = ({ onBackToDoors, onOpenEngagement }) => {
               {/* Filter Tabs */}
               <div className="flex flex-wrap items-center justify-center gap-1.5">
                 {[
-                  { id: 'all', label: 'All 5 Ceremonies' },
-                  { id: 'haldi', label: '01 Haldi' },
-                  { id: 'aiburobhat', label: '02 Aiburobhat' },
-                  { id: 'mehndi', label: '03 Mehndi' },
-                  { id: 'sangeet', label: '04 Sangeet' },
-                  { id: 'marriage', label: '05 Marriage' },
+                  { id: 'all', label: 'All Ceremonies' },
+                  { id: 'haldi', label: 'Haldi' },
+                  { id: 'aiburobhat', label: 'Aiburobhat' },
+                  { id: 'mehndi', label: 'Mehndi' },
+                  { id: 'sangeet', label: 'Sangeet' },
+                  { id: 'marriage', label: 'Marriage' },
                 ].map((tab) => (
                   <button
                     key={tab.id}
@@ -339,24 +362,6 @@ export const WeddingExperience = ({ onBackToDoors, onOpenEngagement }) => {
                 ))}
               </div>
 
-              {/* Master Reveal All Toggle */}
-              <button
-                onClick={toggleRevealAllDates}
-                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-gradient-to-r from-[#ECC875] via-[#C9A45C] to-[#B38D43] text-[#302522] text-xs font-display uppercase tracking-wider font-bold shadow-sm hover:brightness-105 transition-all cursor-pointer active:scale-95 shrink-0"
-                title={allDatesRevealed ? 'Hide All Dates' : 'Reveal All Dates'}
-              >
-                {allDatesRevealed ? (
-                  <>
-                    <EyeOff className="w-3.5 h-3.5" />
-                    <span>Hide All Dates</span>
-                  </>
-                ) : (
-                  <>
-                    <Eye className="w-3.5 h-3.5" />
-                    <span>Reveal All Dates</span>
-                  </>
-                )}
-              </button>
             </div>
           </div>
 
@@ -395,11 +400,6 @@ export const WeddingExperience = ({ onBackToDoors, onOpenEngagement }) => {
                     {/* Top Badge Row */}
                     <div className="flex flex-wrap items-center justify-between gap-2 mb-5">
                       <div className="flex items-center gap-2">
-                        {/* Sequence Number Badge */}
-                        <span className="w-8 h-8 rounded-full bg-[#7A1F2B] text-[#ECC875] border border-[#ECC875] flex items-center justify-center font-heading text-xs font-bold shadow-sm">
-                          {ceremony.sequenceDisplay}
-                        </span>
-
                         <div>
                           <span className="font-serif text-sm font-bold text-[#7A1F2B]">
                             {ceremony.bengaliName}
@@ -433,7 +433,7 @@ export const WeddingExperience = ({ onBackToDoors, onOpenEngagement }) => {
                             const pIndex = wedding.photos.findIndex((p) => p.src === ceremony.image);
                             setActivePhotoIndex(pIndex >= 0 ? pIndex : 0);
                           }}
-                          className="group relative rounded-2xl overflow-hidden border-2 border-[#ECC875] shadow-lg aspect-[16/11] sm:aspect-[4/3] bg-[#30080E] cursor-pointer"
+                          className="group relative mx-auto w-full rounded-2xl overflow-hidden border-2 border-[#ECC875] shadow-lg aspect-[16/11] sm:aspect-[4/3] bg-[#30080E] cursor-pointer"
                         >
                           <img
                             src={ceremony.image}
@@ -446,21 +446,6 @@ export const WeddingExperience = ({ onBackToDoors, onOpenEngagement }) => {
                           {/* Shimmer Light Sweeper on hover */}
                           <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none overflow-hidden">
                             <div className="w-1/2 h-full bg-gradient-to-r from-transparent via-white/20 to-transparent animate-sheen" />
-                          </div>
-
-                          {/* Top Corner Watermark Badge */}
-                          <div className="absolute top-3 left-3 z-20">
-                            <span className="px-3 py-1 rounded-full bg-[#1A050B]/85 text-[#ECC875] border border-[#ECC875]/80 text-[10px] font-display uppercase tracking-widest font-semibold backdrop-blur-md shadow-sm">
-                              {ceremony.sequenceDisplay} • {ceremony.name}
-                            </span>
-                          </div>
-
-                          {/* Bottom Enlarge Pill */}
-                          <div className="absolute bottom-3 right-3 z-20">
-                            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-black/60 hover:bg-black/80 text-white text-[10px] font-sans backdrop-blur-md border border-white/30 transition-all">
-                              <Maximize2 className="w-3 h-3 text-[#ECC875]" />
-                              <span>Enlarge</span>
-                            </span>
                           </div>
                         </div>
                       </div>
@@ -484,23 +469,24 @@ export const WeddingExperience = ({ onBackToDoors, onOpenEngagement }) => {
                         </div>
 
                         {/* Description */}
-                        <p className="font-serif text-xs sm:text-sm text-[#6B5B57] leading-relaxed mb-4">
-                          {ceremony.description}
-                        </p>
+                        {ceremony.description && (
+                          <p className="font-serif text-xs sm:text-sm text-[#6B5B57] leading-relaxed mb-4">
+                            {ceremony.description}
+                          </p>
+                        )}
 
                         {/* ──────────────────────────────────────────────────────────
                             INTERACTIVE SCRATCH-TO-REVEAL CARD FOR DATE & TIME
                             ────────────────────────────────────────────────────────── */}
                         <div className="mb-4">
-                          <ScratchCard
-                            id={ceremony.id}
+                          <WeddingDateCard
                             date={ceremony.date}
                             day={ceremony.day}
                             time={ceremony.time}
-                            ceremonyName={ceremony.name}
-                            bengaliName={ceremony.bengaliName}
-                            colorTheme={ceremony.colorTheme}
-                            isGloballyRevealed={allDatesRevealed}
+                            name={ceremony.name}
+                            image={CEREMONY_DATE_IMAGES[ceremony.id] || ceremony.image}
+                            theme={ceremony.id}
+                            compact={ceremony.id !== 'marriage'}
                           />
                         </div>
 
