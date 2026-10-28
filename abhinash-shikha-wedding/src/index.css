@@ -1420,9 +1420,9 @@ body {
   }
 }
 
-.couple-invitation-actions { display:flex; flex-wrap:wrap; justify-content:center; align-items:center; gap:10px; margin-top:14px; }
+.couple-invitation-actions { display:flex; flex-wrap:wrap; justify-content:center; align-items:center; gap:16px; margin-top:14px; }
 .couple-invitation-actions .couple-open-invitation {
-  flex:0 0 240px; box-sizing:border-box; width:240px; height:54px; min-height:54px; padding:12px 16px;
+  flex:0 0 260px; box-sizing:border-box; width:260px; height:54px; min-height:54px; padding:12px 18px;
   display:inline-flex; align-items:center; justify-content:center; gap:7px; border-radius:999px;
   font-size:11.5px; line-height:1.2; letter-spacing:.1em; text-align:center;
 }
@@ -1430,8 +1430,8 @@ body {
 .couple-open-engagement span { color:#f5dfa5; }
 .couple-portrait-frame { flex-shrink:0; }
 @media (max-width:560px) {
-  .couple-invitation-actions { gap:8px; margin-top:10px; }
-  .couple-invitation-actions .couple-open-invitation { flex-basis:210px; width:210px; height:50px; min-height:50px; padding:10px 14px; font-size:10.5px; }
+  .couple-invitation-actions { gap:12px; margin-top:10px; }
+  .couple-invitation-actions .couple-open-invitation { flex-basis:220px; width:220px; height:50px; min-height:50px; padding:10px 15px; font-size:10.5px; }
 }
 @media (max-width:639px) {
   .couple-invitation-scene {
