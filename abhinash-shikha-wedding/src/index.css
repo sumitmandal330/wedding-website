@@ -1430,7 +1430,7 @@ body {
 .couple-open-engagement span { color:#f5dfa5; }
 .couple-portrait-frame { flex-shrink:0; }
 @media (max-width:560px) {
-  .couple-invitation-actions { gap:12px; margin-top:10px; }
+  .couple-invitation-actions { column-gap:12px; row-gap:18px; margin-top:10px; }
   .couple-invitation-actions .couple-open-invitation { flex-basis:220px; width:220px; height:50px; min-height:50px; padding:10px 15px; font-size:10.5px; }
 }
 @media (max-width:639px) {
