@@ -30,6 +30,7 @@ export const App = () => {
   const musicTrigger = false;
   const [doorsAutoOpen, setDoorsAutoOpen] = useState(false);
   const [doorsReturnScene, setDoorsReturnScene] = useState('cover');
+  const [engagementReturnScene, setEngagementReturnScene] = useState('wedding');
 
   // Transitions
   const handleEnterFromWelcome = () => {
@@ -53,6 +54,7 @@ export const App = () => {
 
   const handleSelectDoor = useCallback((choice) => {
     if (choice === 'engagement') {
+      setEngagementReturnScene('doors');
       setCurrentScene('engagement');
     } else {
       setCurrentScene('wedding');
@@ -72,12 +74,13 @@ export const App = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleBackToWedding = () => {
-    setCurrentScene('wedding');
+  const handleBackFromEngagement = () => {
+    setCurrentScene(engagementReturnScene);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleOpenEngagement = () => {
+    setEngagementReturnScene(currentScene);
     setCurrentScene('engagement');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -106,7 +109,11 @@ export const App = () => {
         )}
 
         {currentScene === 'engagement' && (
-          <EngagementExperience key="engagement" onBackToWedding={handleBackToWedding} />
+          <EngagementExperience
+            key="engagement"
+            onBack={handleBackFromEngagement}
+            backLabel={engagementReturnScene === 'ganesha' ? 'Ganesha Blessing' : engagementReturnScene === 'doors' ? 'Choose Ceremony' : 'Wedding Invitation'}
+          />
         )}
 
         {currentScene === 'wedding' && (

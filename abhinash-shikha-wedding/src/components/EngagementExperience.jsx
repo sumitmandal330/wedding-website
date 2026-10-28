@@ -34,7 +34,7 @@ const CornerFiligree = ({ position = 'top-left' }) => {
   );
 };
 
-export const EngagementExperience = ({ onBackToWedding }) => {
+export const EngagementExperience = ({ onBack, backLabel = 'Wedding Invitation' }) => {
   const prefersReducedMotion = useReducedMotion();
   const { engagement, couple } = weddingData;
   const photos = (engagement.photos || []).filter((photo) => ![6, 7].includes(photo.id));
@@ -60,7 +60,7 @@ export const EngagementExperience = ({ onBackToWedding }) => {
   }, [activePhotoIndex, photos.length]);
 
   const handleShare = () => {
-    const text = `🌸 Cherished memories from the Engagement & Ashirwadi Celebration of ${couple.groom} & ${couple.bride} (Celebrated on ${engagement.date})! View album:`;
+    const text = `🌸 Cherished memories from the Engagement & Ashirwadi Celebration of ${couple.bride} & ${couple.groom} (Celebrated on ${engagement.date})! View album:`;
     if (navigator.share) {
       navigator.share({ title: 'Engagement & Ashirwadi Album', text, url: 'https://wedding-website-nu-two-23.vercel.app/' }).catch(() => {});
     } else {
@@ -101,12 +101,12 @@ export const EngagementExperience = ({ onBackToWedding }) => {
         {/* TOP BAR: Return and share controls */}
         <div className="flex items-center justify-between gap-2 mb-8 pb-4 border-b border-[#C9A45C]/30">
           <button
-            onClick={onBackToWedding}
+            onClick={onBack}
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#7A1F2B] text-[#FFF9F0] border border-[#ECC875] text-xs font-display uppercase tracking-wider font-semibold hover:bg-[#54111B] transition-all cursor-pointer shadow-sm active:scale-95"
-            title="Return to Wedding Invitation"
+            title={`Return to ${backLabel}`}
           >
             <ArrowLeft className="w-3.5 h-3.5 text-[#ECC875]" />
-            <span className="hidden sm:inline">Wedding Invitation</span>
+            <span className="hidden sm:inline">{backLabel}</span>
             <span className="sm:hidden">Back</span>
           </button>
 
@@ -141,7 +141,7 @@ export const EngagementExperience = ({ onBackToWedding }) => {
             The Engagement &amp; Ashirwadi of
           </h1>
           <h2 className="font-heading text-3xl sm:text-5xl md:text-6xl text-gold-gradient font-bold tracking-tight mt-1">
-            {couple.groom} &amp; {couple.bride}
+            {couple.bride} &amp; {couple.groom}
           </h2>
 
           <div className="flex items-center justify-center gap-3 my-4">
@@ -233,7 +233,7 @@ export const EngagementExperience = ({ onBackToWedding }) => {
           <div className="relative mx-auto w-full max-w-[210px] rounded-[1.4rem] border border-[#ECC875] bg-[#ECC875] p-1.5 shadow-xl sm:max-w-[250px] lg:max-w-[310px]">
             <img
               src="/images/engagement/wedding-invitation-couple.jpeg"
-              alt="Abinash and Shikha, warmly inviting you to celebrate their wedding"
+              alt="Shikha and Abinash, warmly inviting you to celebrate their wedding"
               className="block aspect-[5/8] w-full rounded-[1.1rem] object-cover object-center"
               loading="lazy"
               decoding="async"
@@ -260,18 +260,18 @@ export const EngagementExperience = ({ onBackToWedding }) => {
             <p className="mx-auto mt-3 max-w-xl font-serif text-sm leading-relaxed text-[#F5EBDD]/85 sm:text-base">
               Hum dono ko aapki maujoodgi aur aashirwad ka besabri se intezaar rahega.
             </p>
-            <p className="mt-3 font-heading text-base text-[#ECC875] sm:text-lg">— Abinash &amp; Shikha</p>
+            <p className="mt-3 font-heading text-base text-[#ECC875] sm:text-lg">— Shikha &amp; Abinash</p>
           </div>
         </motion.section>
 
         {/* BOTTOM NAVIGATION CTA */}
         <div className="text-center pt-6 border-t border-[#C9A45C]/30 flex flex-col sm:flex-row items-center justify-center gap-4">
           <button
-            onClick={onBackToWedding}
+            onClick={onBack}
             className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full bg-gradient-to-r from-[#7A1F2B] via-[#651520] to-[#54111B] text-[#FFF9F0] border border-[#ECC875] text-xs font-display uppercase tracking-widest font-semibold hover:brightness-110 transition-all cursor-pointer shadow-lg active:scale-95"
           >
             <ArrowLeft className="w-4 h-4 text-[#ECC875]" />
-            <span>Return to Wedding Invitation</span>
+            <span>Return to {backLabel}</span>
           </button>
         </div>
       </div>

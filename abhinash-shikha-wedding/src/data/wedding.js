@@ -22,7 +22,7 @@ export const weddingData = {
     city: "Bokaro Steel City",
     state: "Jharkhand",
     pincode: "827012",
-    googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Sree+sai+Enclave+Bari+Co-Operative+colony+Bokaro+Steel+City+Jharkhand+827012",
+    googleMapsUrl: "https://maps.app.goo.gl/wpZH1xvf4kA6a6Ts7",
     welcomeNote: "With the divine grace of Lord Ganesha and the heartfelt blessings of our elders, we joyfully invite you to grace the auspicious wedding ceremonies of Abinash and Shikha.",
 
     // Confirmed 5 Wedding Rituals in EXACT Sequence Requested:

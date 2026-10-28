@@ -174,9 +174,9 @@ export const WeddingExperience = ({ onBackToDoors, onOpenEngagement }) => {
   };
 
   const handleShare = () => {
-    const text = `🌸 You are joyfully invited to the Wedding Celebrations of ${couple.groom} & ${couple.bride} (3 - 5 December 2026)! Explore ceremony dates & view invitation:`;
+    const text = `🌸 You are joyfully invited to the Wedding Celebrations of ${couple.bride} & ${couple.groom} (3 - 5 December 2026)! Explore ceremony dates & view invitation:`;
     if (navigator.share) {
-      navigator.share({ title: `${couple.groom} & ${couple.bride} Wedding Invitation`, text, url: 'https://wedding-website-nu-two-23.vercel.app/' }).catch(() => {});
+      navigator.share({ title: `${couple.bride} & ${couple.groom} Wedding Invitation`, text, url: 'https://wedding-website-nu-two-23.vercel.app/' }).catch(() => {});
     } else {
       window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text + ' https://wedding-website-nu-two-23.vercel.app/')}`, '_blank');
     }
@@ -246,7 +246,7 @@ export const WeddingExperience = ({ onBackToDoors, onOpenEngagement }) => {
           </div>
 
           <h1 className="font-heading text-4xl sm:text-6xl text-[#7A1F2B] font-bold tracking-tight">
-            {couple.groom} &amp; {couple.bride}
+            {couple.bride} &amp; {couple.groom}
           </h1>
 
           <div className="flex items-center justify-center gap-3 my-3">
@@ -496,6 +496,56 @@ export const WeddingExperience = ({ onBackToDoors, onOpenEngagement }) => {
               })}
             </AnimatePresence>
           </div>
+
+          {(selectedRitualTab === 'all' || selectedRitualTab === 'marriage') && (
+            <div className="relative mt-10 rounded-3xl border-2 border-[#C9A45C]/60 bg-gradient-to-b from-[#FFFDF9] to-[#F5EBDD] p-6 text-center shadow-xl sm:p-9">
+              <CornerFiligree position="top-left" />
+              <CornerFiligree position="top-right" />
+              <CornerFiligree position="bottom-left" />
+              <CornerFiligree position="bottom-right" />
+
+              <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full border-2 border-[#ECC875] bg-gradient-to-b from-[#7A1F2B] to-[#4F131B] text-[#ECC875] shadow-md">
+                <MapPin className="h-6 w-6" />
+              </div>
+
+              <p className="mb-1 font-display text-xs font-bold uppercase tracking-[0.25em] text-[#7A1F2B]">
+                Wedding Location
+              </p>
+              <h3 className="mb-2 font-heading text-xl font-semibold text-[#302522] sm:text-2xl">
+                {wedding.venue}
+              </h3>
+              <a
+                href={wedding.googleMapsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mx-auto mb-5 flex w-full max-w-3xl items-center justify-center gap-3 rounded-2xl border border-[#C9A45C]/60 bg-gradient-to-r from-[#54111B] via-[#7A1F2B] to-[#54111B] px-5 py-5 text-[#FFF9F0] shadow-lg transition hover:brightness-110"
+              >
+                <Navigation className="h-5 w-5 shrink-0 text-[#ECC875]" />
+                <span className="text-left">
+                  <span className="block font-display text-xs font-semibold uppercase tracking-[0.16em] text-[#FFF2D2]">Open exact venue pin</span>
+                  <span className="mt-1 block font-serif text-sm text-[#F5EBDD]/85">View location in Google Maps</span>
+                </span>
+              </a>
+              <div className="flex flex-wrap items-center justify-center gap-3">
+                <button
+                  onClick={copyVenueAddress}
+                  className="inline-flex items-center gap-2 rounded-full border border-[#C9A45C]/60 bg-white px-5 py-3 text-xs font-semibold uppercase tracking-wider text-[#7A1F2B] shadow-sm transition-all hover:bg-[#FAF3E8] active:scale-95"
+                >
+                  {copiedAddress ? (
+                    <>
+                      <Check className="h-3.5 w-3.5 text-emerald-600" />
+                      <span>Address Copied!</span>
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="h-3.5 w-3.5 text-[#7A1F2B]" />
+                      <span>Copy Full Address</span>
+                    </>
+                  )}
+                </button>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* A personal wedding invitation from the couple */}
@@ -515,7 +565,7 @@ export const WeddingExperience = ({ onBackToDoors, onOpenEngagement }) => {
           <div className="relative mx-auto w-full max-w-[210px] sm:max-w-[250px] lg:max-w-[310px] rounded-[1.4rem] border border-[#ECC875] bg-[#ECC875] p-1.5 shadow-xl">
             <img
               src="/images/engagement/wedding-invitation-couple.jpeg"
-              alt="Abinash and Shikha, warmly inviting you to celebrate their wedding"
+              alt="Shikha and Abinash, warmly inviting you to celebrate their wedding"
               className="block aspect-[5/8] w-full rounded-[1.1rem] object-cover object-center"
               loading="lazy"
               decoding="async"
@@ -542,55 +592,9 @@ export const WeddingExperience = ({ onBackToDoors, onOpenEngagement }) => {
             <p className="mx-auto mt-3 max-w-xl font-serif text-sm sm:text-base leading-relaxed text-[#F5EBDD]/85">
               Hum dono ko aapki maujoodgi aur aashirwad ka besabri se intezaar rahega.
             </p>
-            <p className="mt-3 font-heading text-base sm:text-lg text-[#ECC875]">— Abinash &amp; Shikha</p>
+            <p className="mt-3 font-heading text-base sm:text-lg text-[#ECC875]">— Shikha &amp; Abinash</p>
           </div>
         </motion.section>
-
-        <div className="relative bg-gradient-to-b from-[#FFFDF9] to-[#F5EBDD] border-2 border-[#C9A45C]/60 rounded-3xl p-6 sm:p-9 shadow-xl mb-12 text-center">
-          <CornerFiligree position="top-left" />
-          <CornerFiligree position="top-right" />
-          <CornerFiligree position="bottom-left" />
-          <CornerFiligree position="bottom-right" />
-
-          <div className="w-12 h-12 mx-auto rounded-full bg-gradient-to-b from-[#7A1F2B] to-[#4F131B] border-2 border-[#ECC875] text-[#ECC875] flex items-center justify-center mb-3 shadow-md">
-            <MapPin className="w-6 h-6" />
-          </div>
-
-          <p className="font-display text-xs uppercase tracking-[0.25em] text-[#7A1F2B] font-bold mb-1">
-            Confirmed Wedding Venue
-          </p>
-          <h3 className="font-heading text-xl sm:text-2xl text-[#302522] font-semibold mb-2">
-            {wedding.venue}
-          </h3>
-          <div className="flex flex-wrap items-center justify-center gap-3">
-            <a
-              href={wedding.googleMapsUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#7A1F2B] text-[#FFF9F0] border border-[#ECC875] text-xs font-display uppercase tracking-widest font-semibold hover:bg-[#54111B] transition-all shadow-md active:scale-95"
-            >
-              <Navigation className="w-3.5 h-3.5 text-[#ECC875]" />
-              <span>Open in Google Maps</span>
-            </a>
-
-            <button
-              onClick={copyVenueAddress}
-              className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-white hover:bg-[#FAF3E8] text-[#7A1F2B] border border-[#C9A45C]/60 text-xs font-display uppercase tracking-wider font-semibold transition-all cursor-pointer shadow-sm active:scale-95"
-            >
-              {copiedAddress ? (
-                <>
-                  <Check className="w-3.5 h-3.5 text-emerald-600" />
-                  <span>Address Copied!</span>
-                </>
-              ) : (
-                <>
-                  <Copy className="w-3.5 h-3.5 text-[#7A1F2B]" />
-                  <span>Copy Full Address</span>
-                </>
-              )}
-            </button>
-          </div>
-        </div>
 
         {/* Engagement memories invitation */}
         <motion.section

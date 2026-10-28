@@ -109,7 +109,7 @@ export const RoyalDoors = ({ onSelectChoice, onBack, autoOpen = false }) => {
             aria-hidden="true"
           />
 
-          {/* LEFT DOOR: GROOM */}
+          {/* LEFT DOOR: BRIDE */}
           <motion.div
             initial={false}
             animate={
@@ -141,9 +141,9 @@ export const RoyalDoors = ({ onSelectChoice, onBack, autoOpen = false }) => {
                     <circle cx="12" cy="3" r="1.5" fill="#FFF9F0" />
                   </svg>
                 </div>
-                <span className="mt-3 block font-display text-[9px] sm:text-[10px] uppercase tracking-[0.22em] text-[#ECC875] font-semibold">Groom</span>
+                <span className="mt-3 block font-display text-[9px] sm:text-[10px] uppercase tracking-[0.22em] text-[#ECC875] font-semibold">Bride</span>
                 <h3 className="mt-1 font-heading text-base sm:text-xl font-bold text-[#FFF9F0] group-hover:text-[#ECC875] transition-colors leading-tight">
-                  {weddingData.couple.groom}
+                  {weddingData.couple.bride}
                 </h3>
               </div>
 
@@ -161,7 +161,7 @@ export const RoyalDoors = ({ onSelectChoice, onBack, autoOpen = false }) => {
             </div>
           </motion.div>
 
-          {/* RIGHT DOOR: WEDDING */}
+          {/* RIGHT DOOR: GROOM */}
           <motion.div
             initial={false}
             animate={
@@ -189,9 +189,9 @@ export const RoyalDoors = ({ onSelectChoice, onBack, autoOpen = false }) => {
                   {/* Sacred Vivah / Mandap Knot Motif */}
                   <Heart className="w-8 h-8 sm:w-10 sm:h-10 text-[#ECC875] fill-current" />
                 </div>
-                <span className="mt-3 block font-display text-[9px] sm:text-[10px] uppercase tracking-[0.22em] text-[#ECC875] font-semibold">Bride</span>
+                <span className="mt-3 block font-display text-[9px] sm:text-[10px] uppercase tracking-[0.22em] text-[#ECC875] font-semibold">Groom</span>
                 <h3 className="mt-1 font-heading text-base sm:text-xl font-bold text-[#FFF9F0] group-hover:text-[#ECC875] transition-colors leading-tight">
-                  {weddingData.couple.bride}
+                  {weddingData.couple.groom}
                 </h3>
               </div>
 
