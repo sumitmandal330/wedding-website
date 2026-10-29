@@ -241,7 +241,7 @@ export const WeddingExperience = ({ onBackToDoors, onOpenEngagement }) => {
         >
           <div className="inline-flex items-center gap-2 px-5 py-1.5 rounded-full bg-gradient-to-r from-[#7A1F2B]/10 via-[#C9A45C]/20 to-[#7A1F2B]/10 border border-[#C9A45C]/50 mb-3 text-xs font-display uppercase tracking-[0.2em] text-[#7A1F2B] font-semibold shadow-inner">
             <span className="text-[#C9A45C]">✦</span>
-            <span>॥ শুভ বিবাহ মহোৎসব • Bengali Wedding Invitation ॥</span>
+            <span>॥ শুভ বিবাহ আমন্ত্রণপত্র • Bengali Wedding Invitation ॥</span>
             <span className="text-[#C9A45C]">✦</span>
           </div>
 

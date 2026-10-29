@@ -81,7 +81,7 @@ export const weddingData = {
         bengaliName: "মেহেন্দি",
         bengaliSubtext: "Mehndi Utsav",
         hindiName: "शुभ मेहंदी उत्सव",
-        shloka: "গভীর রাঙা মেহেদির রঙে সাজুক ভালোবাসার অঙ্গ",
+        shloka: "গভীর রাঙা মেহেন্দির রঙে সাজুক ভালোবাসার অঙ্গ",
         tagline: "Henna Hues, Dhol & Festive Beats",
         date: "4 December 2026",
         day: "Friday",
