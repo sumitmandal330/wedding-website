@@ -60,14 +60,12 @@ export const EngagementExperience = ({ onBack, backLabel = 'Wedding Invitation' 
   }, [activePhotoIndex, photos.length]);
 
   const handleShare = () => {
-    const text = `🌸 Cherished memories from the Engagement & Ashirwadi Celebration of ${couple.bride} & ${couple.groom} (Celebrated on ${engagement.date})! View album:`;
+    const url = 'https://wedding-website-nu-two-23.vercel.app/';
+    const text = 'Cherished memories from the engagement and Ashirwadi celebration of ' + couple.bride + ' & ' + couple.groom + ' (celebrated on ' + engagement.date + '). View the album: ' + url;
     if (navigator.share) {
-      navigator.share({ title: 'Engagement & Ashirwadi Album', text, url: 'https://wedding-website-nu-two-23.vercel.app/' }).catch(() => {});
+      navigator.share({ title: 'Engagement & Ashirwadi Album', text }).catch(() => {});
     } else {
-      window.open(
-        `https://api.whatsapp.com/send?text=${encodeURIComponent(text + ' https://wedding-website-nu-two-23.vercel.app/')}`,
-        '_blank'
-      );
+      window.open('https://api.whatsapp.com/send?text=' + encodeURIComponent(text), '_blank');
     }
   };
 

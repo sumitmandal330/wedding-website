@@ -174,11 +174,12 @@ export const WeddingExperience = ({ onBackToDoors, onOpenEngagement }) => {
   };
 
   const handleShare = () => {
-    const text = `🌸 You are joyfully invited to the Wedding Celebrations of ${couple.bride} & ${couple.groom} (3 - 5 December 2026)! Explore ceremony dates & view invitation:`;
+    const url = 'https://wedding-website-nu-two-23.vercel.app/';
+    const text = 'You are warmly invited to the wedding celebrations of ' + couple.bride + ' & ' + couple.groom + ' from 3–5 December 2026. View the invitation and ceremony details: ' + url;
     if (navigator.share) {
-      navigator.share({ title: `${couple.bride} & ${couple.groom} Wedding Invitation`, text, url: 'https://wedding-website-nu-two-23.vercel.app/' }).catch(() => {});
+      navigator.share({ title: couple.bride + ' & ' + couple.groom + ' Wedding Invitation', text }).catch(() => {});
     } else {
-      window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text + ' https://wedding-website-nu-two-23.vercel.app/')}`, '_blank');
+      window.open('https://api.whatsapp.com/send?text=' + encodeURIComponent(text), '_blank');
     }
   };
 
