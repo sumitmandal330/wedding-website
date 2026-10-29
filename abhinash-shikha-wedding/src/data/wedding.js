@@ -78,7 +78,7 @@ export const weddingData = {
         sequence: 3,
         sequenceDisplay: "03",
         name: "Mehndi",
-        bengaliName: "মেহেদি",
+        bengaliName: "মেহেন্দি",
         bengaliSubtext: "Mehndi Utsav",
         hindiName: "शुभ मेहंदी उत्सव",
         shloka: "গভীর রাঙা মেহেদির রঙে সাজুক ভালোবাসার অঙ্গ",
