@@ -27,7 +27,7 @@ export const App = () => {
     }
     return 'cover';
   });
-  const musicTrigger = false;
+  const musicTrigger = true;
   const [doorsAutoOpen, setDoorsAutoOpen] = useState(false);
   const [doorsReturnScene, setDoorsReturnScene] = useState('cover');
   const [engagementReturnScene, setEngagementReturnScene] = useState('wedding');

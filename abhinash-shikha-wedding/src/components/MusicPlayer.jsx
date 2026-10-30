@@ -101,6 +101,8 @@ export const MusicPlayer = ({ autoPlayTrigger }) => {
       hasTriggeredRef.current = true;
       if (audioRef.current) {
         audioRef.current.volume = 0.5;
+        // Every fresh visit should begin at the start of the wedding track.
+        audioRef.current.currentTime = 0;
         audioRef.current
           .play()
           .then(() => setIsPlaying(true))
@@ -126,7 +128,7 @@ export const MusicPlayer = ({ autoPlayTrigger }) => {
         ref={audioRef}
         src={weddingData.music.audioSrc}
         loop
-        preload="none"
+        preload="auto"
         onError={() => setUseSynth(true)}
       />
 
