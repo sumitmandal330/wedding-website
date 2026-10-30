@@ -1,100 +1,12 @@
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Volume2, VolumeX, Music, Play, Pause } from 'lucide-react';
 import { weddingData } from '../data/wedding';
 
 export const MusicPlayer = ({ autoPlayTrigger }) => {
   const [isPlaying, setIsPlaying] = useState(false);
-  const [useSynth, setUseSynth] = useState(false);
-
   const audioRef = useRef(null);
-  const audioCtxRef = useRef(null);
-  const synthNodesRef = useRef([]);
-  const gainNodeRef = useRef(null);
   const hasTriggeredRef = useRef(false);
-
-  const stopSynth = useCallback(() => {
-    if (gainNodeRef.current && audioCtxRef.current) {
-      gainNodeRef.current.gain.setValueAtTime(gainNodeRef.current.gain.value, audioCtxRef.current.currentTime);
-      gainNodeRef.current.gain.exponentialRampToValueAtTime(0.0001, audioCtxRef.current.currentTime + 0.5);
-    }
-    setTimeout(() => {
-      synthNodesRef.current.forEach((n) => {
-        try {
-          n.stop();
-          n.disconnect();
-        } catch {
-          // oscillator already stopped
-        }
-      });
-      synthNodesRef.current = [];
-    }, 500);
-  }, []);
-
-  // Web Audio Procedural Indian Tanpura Drone
-  const startSynth = useCallback(() => {
-    try {
-      const AudioCtx = window.AudioContext || window.webkitAudioContext;
-      if (!audioCtxRef.current) audioCtxRef.current = new AudioCtx();
-      const ctx = audioCtxRef.current;
-      if (ctx.state === 'suspended') ctx.resume();
-
-      stopSynth();
-
-      const masterGain = ctx.createGain();
-      masterGain.gain.setValueAtTime(0.01, ctx.currentTime);
-      masterGain.gain.exponentialRampToValueAtTime(0.12, ctx.currentTime + 2.5);
-      masterGain.connect(ctx.destination);
-      gainNodeRef.current = masterGain;
-
-      // Sa, Pa, high Sa harmonic Indian drone
-      const freqs = [146.83, 220.0, 293.66, 440.0];
-      const nodes = [];
-
-      freqs.forEach((freq, idx) => {
-        const osc = ctx.createOscillator();
-        const oscGain = ctx.createGain();
-        osc.type = idx % 2 === 0 ? 'sine' : 'triangle';
-        osc.frequency.setValueAtTime(freq, ctx.currentTime);
-
-        const lfo = ctx.createOscillator();
-        const lfoGain = ctx.createGain();
-        lfo.frequency.setValueAtTime(0.2 + idx * 0.1, ctx.currentTime);
-        lfoGain.gain.setValueAtTime(1.5, ctx.currentTime);
-        lfo.connect(osc.frequency);
-        lfo.start();
-
-        oscGain.gain.setValueAtTime(0.06 / (idx + 1), ctx.currentTime);
-        osc.connect(oscGain);
-        oscGain.connect(masterGain);
-        osc.start();
-
-        nodes.push(osc, lfo);
-      });
-
-      synthNodesRef.current = nodes;
-      setUseSynth(true);
-      setIsPlaying(true);
-    } catch {
-      // Audio context restricted
-    }
-  }, [stopSynth]);
-
-  const togglePlayback = () => {
-    if (isPlaying) {
-      if (audioRef.current && !useSynth) audioRef.current.pause();
-      if (useSynth) stopSynth();
-      setIsPlaying(false);
-    } else {
-      if (audioRef.current && !useSynth) {
-        audioRef.current
-          .play()
-          .then(() => setIsPlaying(true))
-          .catch(() => startSynth());
-      } else {
-        startSynth();
-      }
-    }
-  };
+  const interactionStartedRef = useRef(false);
 
   useEffect(() => {
     if (!autoPlayTrigger || hasTriggeredRef.current) return;
@@ -108,28 +20,46 @@ export const MusicPlayer = ({ autoPlayTrigger }) => {
     // autoplay immediately, and the next user gesture must start playback inline.
     const startAfterInteraction = (event) => {
       if (event.target.closest?.('[data-music-control]')) return;
+      if (interactionStartedRef.current) return;
+      interactionStartedRef.current = true;
       audio.currentTime = 0;
       audio.play().then(() => {
-        setIsPlaying(true);
         window.removeEventListener('pointerdown', startAfterInteraction, true);
+        window.removeEventListener('click', startAfterInteraction, true);
         window.removeEventListener('keydown', startAfterInteraction, true);
-      }).catch(() => {});
+      }).catch(() => {
+        interactionStartedRef.current = false;
+      });
     };
     window.addEventListener('pointerdown', startAfterInteraction, true);
+    window.addEventListener('click', startAfterInteraction, true);
     window.addEventListener('keydown', startAfterInteraction, true);
 
     audio.currentTime = 0;
     audio.play().then(() => {
-      setIsPlaying(true);
       window.removeEventListener('pointerdown', startAfterInteraction, true);
+      window.removeEventListener('click', startAfterInteraction, true);
       window.removeEventListener('keydown', startAfterInteraction, true);
     }).catch(() => {});
 
     return () => {
       window.removeEventListener('pointerdown', startAfterInteraction, true);
+      window.removeEventListener('click', startAfterInteraction, true);
       window.removeEventListener('keydown', startAfterInteraction, true);
     };
   }, [autoPlayTrigger]);
+
+  const togglePlayback = () => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    if (audio.paused) {
+      audio.play().then(() => setIsPlaying(true)).catch(() => {});
+    } else {
+      audio.pause();
+      setIsPlaying(false);
+    }
+  };
 
   return (
     <div className="fixed bottom-5 right-5 z-[60] flex items-center gap-2">
@@ -138,7 +68,9 @@ export const MusicPlayer = ({ autoPlayTrigger }) => {
         src={weddingData.music.audioSrc}
         loop
         preload="auto"
-        onError={() => setUseSynth(true)}
+        autoPlay
+        onPlay={() => setIsPlaying(true)}
+        onPause={() => setIsPlaying(false)}
       />
 
       <div className="flex items-center bg-[#7A1F2B]/95 backdrop-blur-md text-[#FFF9F0] border border-[#ECC875] rounded-full px-4 py-2 shadow-2xl">
