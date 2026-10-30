@@ -2,20 +2,23 @@ import { useState, useRef, useEffect } from 'react';
 import { Volume2, VolumeX, Music, Play, Pause } from 'lucide-react';
 import { weddingData } from '../data/wedding';
 
-export const MusicPlayer = ({ autoPlayTrigger }) => {
+export const MusicPlayer = ({ autoPlayTrigger, onStartReady }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef(null);
-  const hasTriggeredRef = useRef(false);
   const interactionStartedRef = useRef(false);
 
   useEffect(() => {
-    if (!autoPlayTrigger || hasTriggeredRef.current) return;
-    hasTriggeredRef.current = true;
+    if (!autoPlayTrigger) return;
 
     const audio = audioRef.current;
     if (!audio) return;
 
     audio.volume = 0.5;
+    const startAudio = () => {
+      audio.currentTime = 0;
+      audio.play().then(() => setIsPlaying(true)).catch(() => {});
+    };
+    onStartReady?.(startAudio);
     // Register gesture handlers before attempting autoplay. Some browsers reject
     // autoplay immediately, and the next user gesture must start playback inline.
     const startAfterInteraction = (event) => {
@@ -43,11 +46,12 @@ export const MusicPlayer = ({ autoPlayTrigger }) => {
     }).catch(() => {});
 
     return () => {
+      onStartReady?.(null);
       window.removeEventListener('pointerdown', startAfterInteraction, true);
       window.removeEventListener('click', startAfterInteraction, true);
       window.removeEventListener('keydown', startAfterInteraction, true);
     };
-  }, [autoPlayTrigger]);
+  }, [autoPlayTrigger, onStartReady]);
 
   const togglePlayback = () => {
     const audio = audioRef.current;

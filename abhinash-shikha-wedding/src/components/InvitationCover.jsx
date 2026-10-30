@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 
-export const InvitationCover = ({ onOpen }) => {
+export const InvitationCover = ({ onOpen, onStartMusic }) => {
   const [isOpening, setIsOpening] = useState(false);
   const prefersReducedMotion = useReducedMotion();
   const timerRef = useRef(null);
@@ -10,6 +10,7 @@ export const InvitationCover = ({ onOpen }) => {
 
   const handleOpen = () => {
     if (isOpening) return;
+    onStartMusic?.();
     setIsOpening(true);
     timerRef.current = setTimeout(onOpen, prefersReducedMotion ? 1800 : 4000);
   };

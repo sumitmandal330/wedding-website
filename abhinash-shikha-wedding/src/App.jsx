@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { WelcomeScreen } from './components/WelcomeScreen';
 import { InvitationCover } from './components/InvitationCover';
@@ -28,6 +28,10 @@ export const App = () => {
     return 'cover';
   });
   const musicTrigger = true;
+  const startMusicRef = useRef(null);
+  const registerStartMusic = useCallback((startMusic) => {
+    startMusicRef.current = startMusic;
+  }, []);
   const [doorsAutoOpen, setDoorsAutoOpen] = useState(false);
   const [doorsReturnScene, setDoorsReturnScene] = useState('cover');
   const [engagementReturnScene, setEngagementReturnScene] = useState('wedding');
@@ -97,7 +101,7 @@ export const App = () => {
         )}
 
         {currentScene === 'cover' && (
-          <InvitationCover key="cover" onOpen={handleOpenCover} />
+          <InvitationCover key="cover" onOpen={handleOpenCover} onStartMusic={() => startMusicRef.current?.()} />
         )}
 
         {currentScene === 'ganesha' && (
@@ -122,7 +126,7 @@ export const App = () => {
       </AnimatePresence>
 
       {/* Floating Ambient Music Player */}
-      <MusicPlayer autoPlayTrigger={musicTrigger} />
+      <MusicPlayer autoPlayTrigger={musicTrigger} onStartReady={registerStartMusic} />
     </div>
   );
 };
