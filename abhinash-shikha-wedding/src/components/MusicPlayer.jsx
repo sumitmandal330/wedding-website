@@ -97,29 +97,38 @@ export const MusicPlayer = ({ autoPlayTrigger }) => {
   };
 
   useEffect(() => {
-    if (autoPlayTrigger && !hasTriggeredRef.current) {
-      hasTriggeredRef.current = true;
-      if (audioRef.current) {
-        audioRef.current.volume = 0.5;
-        // Every fresh visit should begin at the start of the wedding track.
-        audioRef.current.currentTime = 0;
-        audioRef.current
-          .play()
-          .then(() => setIsPlaying(true))
-          .catch(() => {
-            // Browsers may block sound on page load. Retry on the visitor's first
-            // gesture so the supplied wedding track starts as soon as permitted.
-            const retryAfterInteraction = (event) => {
-              window.removeEventListener('pointerdown', retryAfterInteraction, true);
-              window.removeEventListener('keydown', retryAfterInteraction, true);
-              if (event.target.closest?.('[data-music-control]')) return;
-              audioRef.current?.play().then(() => setIsPlaying(true)).catch(() => {});
-            };
-            window.addEventListener('pointerdown', retryAfterInteraction, true);
-            window.addEventListener('keydown', retryAfterInteraction, true);
-          });
-      }
-    }
+    if (!autoPlayTrigger || hasTriggeredRef.current) return;
+    hasTriggeredRef.current = true;
+
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    audio.volume = 0.5;
+    // Register gesture handlers before attempting autoplay. Some browsers reject
+    // autoplay immediately, and the next user gesture must start playback inline.
+    const startAfterInteraction = (event) => {
+      if (event.target.closest?.('[data-music-control]')) return;
+      audio.currentTime = 0;
+      audio.play().then(() => {
+        setIsPlaying(true);
+        window.removeEventListener('pointerdown', startAfterInteraction, true);
+        window.removeEventListener('keydown', startAfterInteraction, true);
+      }).catch(() => {});
+    };
+    window.addEventListener('pointerdown', startAfterInteraction, true);
+    window.addEventListener('keydown', startAfterInteraction, true);
+
+    audio.currentTime = 0;
+    audio.play().then(() => {
+      setIsPlaying(true);
+      window.removeEventListener('pointerdown', startAfterInteraction, true);
+      window.removeEventListener('keydown', startAfterInteraction, true);
+    }).catch(() => {});
+
+    return () => {
+      window.removeEventListener('pointerdown', startAfterInteraction, true);
+      window.removeEventListener('keydown', startAfterInteraction, true);
+    };
   }, [autoPlayTrigger]);
 
   return (
